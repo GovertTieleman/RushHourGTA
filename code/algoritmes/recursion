@@ -1,0 +1,13 @@
+Pseudo code
+
+function get out(coordinates car, coordinates exit):
+    while coordinates car != coordinates exit:
+        look at coordinates between car and exit
+        move car(coordinates)
+  
+function move car(coordinates)     
+    if coordinates are free:
+        move car to coordinates
+    if coordinates are occupied by vehicle:
+        move vehicle()
+        continue
