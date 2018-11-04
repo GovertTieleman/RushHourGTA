@@ -1,4 +1,4 @@
-from board import board
+# from board import board
 
 
 class RushHour():
@@ -11,7 +11,7 @@ class RushHour():
         Load the board and cars
         """
         # load board
-        board_loaded = self.load_board(filename)
+        self.board_loaded = self.load_board(filename)
 
     def load_board(self, filename):
         """
@@ -24,12 +24,12 @@ class RushHour():
             # read lines
             lines = f.readlines()
             size = len(lines[0])
+        return lines[0]
 
     def __str__(self):
-        # TODO
-        pass
+        return self.board_loaded
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("data/Game1.txt")
+    rushhour = RushHour("../../data/Game1.txt")
     print(RushHour)
