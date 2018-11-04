@@ -1,5 +1,6 @@
 from board import board
 
+
 class RushHour():
     """
     Main file for running and solving the game
@@ -23,3 +24,12 @@ class RushHour():
             # read lines
             lines = f.readlines()
             size = len(lines[0])
+
+    def __str__(self):
+        # TODO
+        pass
+
+
+if __name__ == "__main__":
+    rushhour = RushHour("data/Game1.txt")
+    print(RushHour)
