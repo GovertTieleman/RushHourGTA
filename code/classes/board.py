@@ -1,6 +1,8 @@
-class Grid(object):
+from car import car
+
+class Board(object):
     """
-    Representation of the grid in Rush Hour.
+    Representation of the board in Rush Hour.
     """
 
     def __init__(self, height, width):
@@ -18,6 +20,7 @@ class Grid(object):
             for y in height:
                 coordinates.append(Coordinate(x,y))
         return coordinates
+
 
 class Coordinate(object:
     """
