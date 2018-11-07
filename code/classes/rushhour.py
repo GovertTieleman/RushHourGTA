@@ -43,6 +43,8 @@ class RushHour():
                 x = 1
                 y += 1
 
+        print(self.cars[0].location)
+
         # create printable board
         for car in self.cars:
             if self.cars[car].x[0] - self.cars[car].x[1] == 0:
