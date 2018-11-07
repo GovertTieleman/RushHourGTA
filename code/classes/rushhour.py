@@ -54,20 +54,40 @@ class RushHour():
             print(self.cars[car].y)
             print(self.cars[car].orientation)
 
-        board_printable = ''
-        for line in lines:
-            board_printable += "  ".join(line)
 
         # create board class
-        self.board = Board(size, coordinates, board_printable)
+        self.board = Board(size, coordinates)
 
         # return board
         return self.board
 
+    def move_car(self, car_id, distance, direction):
+        """move car to a valid position"""
+
+        car = self.cars[car_id]
+
+        # direction = +1 of -1
+        if car.move_valid(distance, direction):
+            if car.orientation == 'HORIZONTAL':
+                for x in car.x:
+                    self.board.coordinates[x, car.y[0]] = '-'
+                    x += distance * direction
+                    self.board.coordinates[x, car.y[0]] = car_id
+            elif car.orientation == 'VERTICAL':
+                for y in car.y:
+                    self.board.coordinates[car.x[0], y] = '-'
+                    y += distance * direction
+                    self.board.coordinates[car.x[0], y] = car_id
+
+
     def __str__(self):
-        return f"{self.board.printable}\n{self.board.coordinates}"
+        return f"{self.board.coordinates}"
 
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
+    print(rushhour.board)
+    print(rushhour)
+    rushhour.move_car('A', 1, 1)
+    print(rushhour.board)
     print(rushhour)

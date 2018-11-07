@@ -11,6 +11,7 @@ class Car(object):
         self.id = id
         self.x = [x]
         self.y = [y]
+        self.orientation = orientation
 
-        # if self.x[0] - self.x[1] == 0:
-        #     self.orientation = VERTICAL
+    def move_valid(self, distance, direction):
+        return True
