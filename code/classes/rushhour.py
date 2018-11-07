@@ -22,7 +22,7 @@ class RushHour():
         """
         # establish dictionary of coordinates
         coordinates = {}
-        self.cars = []
+        self.cars = {}
         # open file
         with open(filename, "r") as f:
             # read lines and coordinates, starting with x and y at 1
@@ -30,14 +30,24 @@ class RushHour():
             size = len(self.lines[0])
             x = 1
             y = 1
+            carcount = 0
             for line in self.lines:
                 for char in line.strip():
                     coordinates[x, y] = char
+                    if char.isalpha():
+                        coordinates[x, y] = char
+                        # if Car[char] not in self.cars:
+                            # self.cars.location.append([line, strip])
+                        self.cars.append(Car(char))
+
+                        carcount += 1
                     # if char.isalpha():
                     #     self.cars[char] = Car(char, )
                     x += 1
                 x = 1
                 y += 1
+
+        print(self.cars[0].location)
 
         # create printable board
         board_printable = ''
