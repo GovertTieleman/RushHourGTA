@@ -26,23 +26,19 @@ class RushHour():
         # open file
         with open(filename, "r") as f:
             # read lines and coordinates, starting with x and y at 1
-            self.lines = f.readlines()
-            size = len(self.lines[0])
+            lines = f.readlines()
+            size = len(lines[0])
             x = 1
             y = 1
-            carcount = 0
-            for line in self.lines:
+            for line in lines:
                 for char in line.strip():
                     coordinates[x, y] = char
                     if char.isalpha():
-                        coordinates[x, y] = char
-                        # if Car[char] not in self.cars:
-                            # self.cars.location.append([line, strip])
-                        self.cars.append(Car(char))
-
-                        carcount += 1
-                    # if char.isalpha():
-                    #     self.cars[char] = Car(char, )
+                        if char in self.cars:
+                            self.cars[char].x.append(x)
+                            self.cars[char].y.append(y)
+                        else:
+                            self.cars[char] = Car(char, x, y, '')
                     x += 1
                 x = 1
                 y += 1
@@ -50,8 +46,18 @@ class RushHour():
         print(self.cars[0].location)
 
         # create printable board
+        for car in self.cars:
+            if self.cars[car].x[0] - self.cars[car].x[1] == 0:
+                self.cars[car].orientation = 'VERTICAL'
+            else:
+                self.cars[car].orientation = 'HORIZONTAL'
+        for car in self.cars:
+            print(self.cars[car].x)
+            print(self.cars[car].y)
+            print(self.cars[car].orientation)
+
         board_printable = ''
-        for line in self.lines:
+        for line in lines:
             board_printable += "  ".join(line)
 
         # create board class
