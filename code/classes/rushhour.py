@@ -23,6 +23,7 @@ class RushHour():
         # establish dictionary of coordinates
         coordinates = {}
         self.cars = {}
+
         # open file
         with open(filename, "r") as f:
             # read lines and coordinates, starting with x and y at 1
@@ -30,6 +31,7 @@ class RushHour():
             size = len(lines[0])
             x = 1
             y = 1
+            # iterate over characters, creating the board and cars
             for line in lines:
                 for char in line.strip():
                     coordinates[x, y] = char
@@ -43,17 +45,12 @@ class RushHour():
                 x = 1
                 y += 1
 
-        # create printable board
+        # set car orientation
         for car in self.cars:
             if self.cars[car].x[0] - self.cars[car].x[1] == 0:
                 self.cars[car].orientation = 'VERTICAL'
             else:
                 self.cars[car].orientation = 'HORIZONTAL'
-        for car in self.cars:
-            print(self.cars[car].x)
-            print(self.cars[car].y)
-            print(self.cars[car].orientation)
-
 
         # create board class
         self.board = Board(size, coordinates)
@@ -61,12 +58,15 @@ class RushHour():
         # return board
         return self.board
 
-    def move_car(self, car_id, distance, direction):
-        """move car to a valid position"""
 
+    def move_car(self, car_id, distance, direction):
+        """
+        Execute a valid move command.
+        """
+        # get car
         car = self.cars[car_id]
 
-        # direction = +1 of -1
+        # move up or down its axis
         if car.move_valid(distance, direction):
             if car.orientation == 'HORIZONTAL':
                 for i in range(len(car.x)):
