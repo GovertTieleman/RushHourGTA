@@ -67,7 +67,7 @@ class RushHour():
         car = self.cars[car_id]
 
         # move up or down its axis
-        if car.move_valid(distance, direction):
+        if car.move_valid(distance, direction, self.board):
             if car.orientation == 'HORIZONTAL':
                 for i in range(len(car.x)):
                     self.board.coordinates[car.x[i], car.y[i]] = '-'
@@ -80,6 +80,8 @@ class RushHour():
                     car.y[i] += distance * direction
                 for y in car.y:
                     self.board.coordinates[car.x[0], y] = car_id
+        else:
+            print(f"Invalid move")
 
 
     def __str__(self):
@@ -92,5 +94,13 @@ if __name__ == "__main__":
     rushhour.move_car('A', 1, 1)
     print(f"\n{rushhour.board}")
     rushhour.move_car('B', 3, -1)
+    print(f"\n{rushhour.board}")
+    rushhour.move_car('X', 3, 1)
+    print(f"\n{rushhour.board}")
+    rushhour.move_car('X', 3, -1)
+    print(f"\n{rushhour.board}")
+    rushhour.move_car('A', 8, -1)
+    print(f"\n{rushhour.board}")
+    rushhour.move_car('A', 8, 1)
     print(f"\n{rushhour.board}")
 
