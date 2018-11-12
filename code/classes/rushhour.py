@@ -43,7 +43,7 @@ class RushHour():
                 x = 1
                 y += 1
 
-        print(self.cars[0].location)
+        # print(self.cars[0].location)
 
         # create printable board
         for car in self.cars:
