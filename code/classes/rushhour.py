@@ -82,23 +82,66 @@ class RushHour():
         else:
             print(f"Invalid move")
 
+    def won(self):
+        return False
+
+    def play(self):
+
+        # Welcome player into game
+        print(f"This is GTA RushHour.\n"
+              "Input the car you want to move, followed by the direction and amount of steps.\n"
+              "The game is won once you reach the exit!\n")
+
+        # Show the player the board
+        print(self.board)
+
+        # Prompt the user for commands until they've won the game.
+        while not self.won():
+
+            # Input processing
+            car = input("car: ")
+            car = car.upper()
+            if car == "QUIT":
+                exit(0)
+            elif car not in self.cars:
+                print("Car not in game, you lose")
+                exit(0)
+            direction = input("direction: ")
+            distance = input("steps: ")
+            if not car or not direction or not distance:
+                print("Invalid commands, you lose")
+                exit(0)
+
+            self.move_car(car, int(distance), int(direction))
+            print(f"{self.board}\n")
+
     def __str__(self):
         return f"{self.board.coordinates}"
 
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
+    rushhour.play()
     print(rushhour.board)
     rushhour.move_car('A', 1, 1)
+    print("move A down 1")
     print(f"\n{rushhour.board}")
     rushhour.move_car('B', 3, -1)
+    print("move B 3 to the left")
     print(f"\n{rushhour.board}")
     rushhour.move_car('X', 3, 1)
+    print("move x 3 to the right")
     print(f"\n{rushhour.board}")
     rushhour.move_car('X', 3, -1)
+    print("Move X 3 to the left, Jump check, should be invalid")
     print(f"\n{rushhour.board}")
     rushhour.move_car('A', 8, -1)
+    print("move A 8 to up")
     print(f"\n{rushhour.board}")
     rushhour.move_car('A', 8, 1)
+    print("move A 8 down")
+    print(f"\n{rushhour.board}")
+    rushhour.move_car('F', 1, -1)
+    print("move F 1 up")
     print(f"\n{rushhour.board}")
 
