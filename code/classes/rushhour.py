@@ -12,7 +12,7 @@ class RushHour():
         Load the board and cars
         """
         # load board
-        board = self.load_game(filename)
+        self.load_game(filename)
 
     def load_game(self, filename):
         """
@@ -58,7 +58,6 @@ class RushHour():
         # return board
         return self.board
 
-
     def move_car(self, car_id, distance, direction):
         """
         Execute a valid move command.
@@ -82,7 +81,6 @@ class RushHour():
                     self.board.coordinates[car.x[0], y] = car_id
         else:
             print(f"Invalid move")
-
 
     def __str__(self):
         return f"{self.board.coordinates}"
