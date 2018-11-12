@@ -83,7 +83,13 @@ class RushHour():
             print(f"Invalid move")
 
     def won(self):
-        return False
+        distance = 6 - self.cars["X"].x[1]
+        print("Can I make a winning move?")
+        if self.cars["X"].move_valid(distance, 1, self.board):
+            print("Congratulations, you won!")
+            exit(0)
+        else:
+            return False
 
     def play(self):
 
@@ -112,8 +118,9 @@ class RushHour():
                 print("Invalid commands, you lose")
                 exit(0)
 
-            self.move_car(car, int(distance), int(direction))
+            self.move_car(car, int(direction), int(distance))
             print(f"{self.board}\n")
+
 
     def __str__(self):
         return f"{self.board.coordinates}"
@@ -122,26 +129,4 @@ class RushHour():
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
     rushhour.play()
-    print(rushhour.board)
-    rushhour.move_car('A', 1, 1)
-    print("move A down 1")
-    print(f"\n{rushhour.board}")
-    rushhour.move_car('B', 3, -1)
-    print("move B 3 to the left")
-    print(f"\n{rushhour.board}")
-    rushhour.move_car('X', 3, 1)
-    print("move x 3 to the right")
-    print(f"\n{rushhour.board}")
-    rushhour.move_car('X', 3, -1)
-    print("Move X 3 to the left, Jump check, should be invalid")
-    print(f"\n{rushhour.board}")
-    rushhour.move_car('A', 8, -1)
-    print("move A 8 to up")
-    print(f"\n{rushhour.board}")
-    rushhour.move_car('A', 8, 1)
-    print("move A 8 down")
-    print(f"\n{rushhour.board}")
-    rushhour.move_car('F', 1, -1)
-    print("move F 1 up")
-    print(f"\n{rushhour.board}")
 
