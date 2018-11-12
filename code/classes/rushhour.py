@@ -84,7 +84,6 @@ class RushHour():
 
     def won(self):
         distance = 6 - self.cars["X"].x[1]
-        print("Can I make a winning move?")
         if self.cars["X"].move_valid(distance, 1, self.board):
             print("Congratulations, you won!")
             exit(0)
