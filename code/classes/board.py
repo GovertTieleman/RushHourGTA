@@ -1,5 +1,6 @@
 # from car import car
 
+
 class Board(object):
     """
     Representation of the board in Rush Hour.
@@ -16,7 +17,6 @@ class Board(object):
         coords = []
         for point in self.coordinates:
             coords.append(self.coordinates[point])
-
 
         output = ''
         x = 1
