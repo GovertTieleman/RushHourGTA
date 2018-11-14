@@ -68,19 +68,29 @@ class RushHour():
         # move up or down its axis
         if car.move_valid(distance, direction, self.board):
             if car.orientation == 'HORIZONTAL':
+                # replace the whole car on the board by empty squares and move car object
                 for i in range(len(car.x)):
                     self.board.coordinates[car.x[i], car.y[i]] = '-'
                     car.x[i] += distance * direction
+                # place the car in its new position
                 for x in car.x:
                     self.board.coordinates[x, car.y[0]] = car_id
+                # return true if move successful
+                return True
             elif car.orientation == 'VERTICAL':
+                # replace the whole car on the board by empty squares and move car object
                 for i in range(len(car.y)):
                     self.board.coordinates[car.x[i], car.y[i]] = '-'
                     car.y[i] += distance * direction
+                # place the car in its new position
                 for y in car.y:
                     self.board.coordinates[car.x[0], y] = car_id
+                # return true if move successful
+                return True
         else:
-            print(f"Invalid move")
+            # return false if move unsuccessful
+            print(f"Invalid move\n")
+            return False
 
     def won(self):
         distance = 6 - self.cars["X"].x[1]
@@ -98,28 +108,41 @@ class RushHour():
               "The game is won once you reach the exit!\n")
 
         # Show the player the board
-        print(self.board)
+        print(f"{self.board}\n")
 
         # Prompt the user for commands until they've won the game.
         while not self.won():
 
-            # Input processing
-            car = input("car: ")
-            car = car.upper()
+            # get user input
+            command = input("move: ").split(' ')
+            car = command[0].upper()
+
+            # exit game if quit command
             if car == "QUIT":
                 exit(0)
+            # if car doesn't exist, continue
             elif car not in self.cars:
-                print("Car not in game, you lose")
-                exit(0)
-            direction = input("direction: ")
-            distance = input("steps: ")
+                print("Car not in game, try again")
+                continue
+
+            # get direction and distance
+            move = command[1]
+            if move.split()[0] == '-':
+                direction = -1
+                distance = move.split()[1]
+            else:
+                direction = 1
+                distance = move
+
+            # check if car, direction and distance all exist
             if not car or not direction or not distance:
-                print("Invalid commands, you lose")
-                exit(0)
+                print("Invalid command, try again")
+                continue
 
-            self.move_car(car, int(direction), int(distance))
-            print(f"{self.board}\n")
-
+            # move
+            if self.move_car(car, int(direction), int(distance)):
+                # print new board state
+                print(f"{self.board}\n")
 
     def __str__(self):
         return f"{self.board.coordinates}"
