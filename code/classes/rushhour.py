@@ -91,7 +91,7 @@ class RushHour():
                 # place the car in its new position
                 for y in car.y:
                     self.board.coordinates[car.x[0], y] = car_id
-                # return true if move successful
+                # return true if move successful ..
                 return True
         else:
             # return false if move unsuccessful
