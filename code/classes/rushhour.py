@@ -45,13 +45,13 @@ class RushHour():
                 x = 1
                 y += 1
 
-<<<<<<< HEAD
+
         # print(self.cars[0].location)
 
         # create printable board
-=======
+
         # set car orientation
->>>>>>> c79911909fd34f153647b449e48597bad00eed00
+
         for car in self.cars:
             if self.cars[car].x[0] - self.cars[car].x[1] == 0:
                 self.cars[car].orientation = 'VERTICAL'
