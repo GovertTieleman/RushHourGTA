@@ -99,7 +99,7 @@ class RushHour():
             return False
 
     def won(self):
-        distance = 6 - self.cars["X"].x[1]
+        distance = self.board.size - self.cars["X"].x[1]
         if self.cars["X"].move_valid(distance, 1, self.board):
             print("Congratulations, you won!")
             exit(0)
@@ -133,9 +133,9 @@ class RushHour():
 
             # get direction and distance
             move = command[1]
-            if move.split()[0] == '-':
+            if move[0] == '-':
                 direction = -1
-                distance = move.split()[1]
+                distance = move[1:]
             else:
                 direction = 1
                 distance = move
