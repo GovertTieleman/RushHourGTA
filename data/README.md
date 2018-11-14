@@ -1,1 +1,1 @@
-This folder contains the different Rush Hour problems that will be solved by the algorithm. 
+In deze map staan de verschillende speelborden die in de opdracht moeten worden opgelost. De plaatjes van de borden uit de opdracht zijn omgezet naar tekstbestanden die leesbaar zijn voor de computer. Elke auto krijgt een corresponderende letter(hoofdlettergevoelig) en lege velden worden aangeduid met een '-' teken. De rode auto wordt aangeduid met een 'X' en de uitgang met een '#'. 
