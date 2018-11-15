@@ -18,17 +18,15 @@ class Car(object):
             for i in range(len(self.x)):
                 # Check bounds
                 if (self.x[i] + distance * direction) < 1 or (self.x[i] + distance * direction) > board.size:
-                    print("1")
                     return False
                 # Check free space of destination
                 if board.coordinates[(self.x[i] + distance * direction), self.y[i]] != '-' \
                         and board.coordinates[(self.x[i] + distance * direction), self.y[i]] != self.id:
-                    print("2")
                     return False
                 # Check free space of route
                 for step in range(1, distance):
-                    if board.coordinates[(self.x[i] + step * direction), self.y[i]] != '-':
-                        print("3")
+                    if board.coordinates[(self.x[i] + step * direction), self.y[i]] != '-' \
+                                and board.coordinates[(self.x[i] + step * direction), self.y[i]] != self.id:
                         return False
             return True
         elif self.orientation == 'VERTICAL':

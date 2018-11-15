@@ -99,7 +99,7 @@ class RushHour():
             return False
 
     def won(self):
-        distance = self.board.size - 1 - self.cars["X"].x[1]
+        distance = (self.board.size - self.cars["X"].x[1]) - 1
         if self.cars["X"].move_valid(distance, 1, self.board):
             print("Congratulations, you won!")
             exit(0)
@@ -155,6 +155,6 @@ class RushHour():
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/TestGame.txt")
+    rushhour = RushHour("../../data/Game1.txt")
     rushhour.play()
 
