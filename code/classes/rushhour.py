@@ -117,7 +117,7 @@ class RushHour():
         print(f"{self.board}\n")
 
         # Prompt the user for commands until they've won the game.
-        while not self.won():
+        if not self.won():
 
             # get user input
             command = input("move: ").split(' ')
@@ -155,6 +155,6 @@ class RushHour():
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
+    rushhour = RushHour("../../data/Game2.txt")
     rushhour.play()
 
