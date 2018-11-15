@@ -14,6 +14,9 @@ class RushHour():
         # load board
         self.load_game(filename)
 
+        # initialize move_counter
+        self.move_counter = 0
+
     def load_game(self, filename):
         """
         Method for loading the board
@@ -77,24 +80,27 @@ class RushHour():
                 while x_left - i > 0:
                     if self.board.coordinates[(x_left - i), y_car] != '-':
                         # break if no empty space
-                        i = 1
                         break
                     else:
                         # append move to moveslist
                         self.moveslist.append(f"{car_id} {-i}")
                         i += 1
 
+                # reset counter
+                i = 1
+
                 # iterate over fields on the right side of car
                 while x_right + i < self.board.size:
                     if self.board.coordinates[(x_right + i), y_car] != '-':
                         # break if no empty space
-                        i = 1
                         break
                     else:
                         # append move to moveslist
                         self.moveslist.append(f"{car_id} {i}")
                         i += 1
 
+                # reset counter
+                i = 1
             # check if car is vertical
             if self.cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
@@ -111,12 +117,14 @@ class RushHour():
                 while y_top - i > 0:
                     if self.board.coordinates[x_car, (y_top - i)] != '-':
                         # break if no empty space
-                        i = 1
                         break
                     else:
                         # append move to moveslist
                         self.moveslist.append(f"{car_id} {-i}")
                         i += 1
+
+                # reset counter
+                i = 1
 
                 # iterate over fields on the right side of car
                 while y_bottom + i < self.board.size:
@@ -128,6 +136,9 @@ class RushHour():
                         # append move to moveslist
                         self.moveslist.append(f"{car_id} {i}")
                         i += 1
+
+                # reset counter
+                i = 1
 
         for move in self.moveslist:
             print(move)
@@ -177,7 +188,6 @@ class RushHour():
             return False
 
     def play(self):
-
         # Welcome player into game
         print(f"This is GTA RushHour.\n"
               "Input the car you want to move, followed by the direction and amount of steps.\n"
@@ -188,6 +198,8 @@ class RushHour():
 
         # Prompt the user for commands until they've won the game.
         while not self.won():
+            # find moves
+            self.find_moves()
 
             # get user input
             command = input("move: ").split(' ')
@@ -217,8 +229,11 @@ class RushHour():
 
             # move
             if self.move_car(car, int(direction), int(distance)):
+                # increment move counter
+                self.move_counter += 1
+
                 # print new board state
-                print(f"{self.board}\n")
+                print(f"{self.board}\nMoves: {self.move_counter}\n")
 
     def __str__(self):
         return f"{self.board.coordinates}"
@@ -226,6 +241,5 @@ class RushHour():
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
-    rushhour.find_moves()
     rushhour.play()
 
