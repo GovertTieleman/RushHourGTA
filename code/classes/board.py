@@ -14,24 +14,27 @@ class Board(object):
         self.coordinates = coordinates
 
     def __str__(self):
-        coords = []
-        for point in self.coordinates:
-            coords.append(self.coordinates[point])
+        # create list of coordinates
+        coordinateslist = []
+        for coordinate in self.coordinates:
+            coordinateslist.append(self.coordinates[coordinate])
 
+        # initiate output
         output = ''
         x = 1
-        for i in range(len(coords)):
-            if i == (len(coords) - 1):
-                output += "  ".join(coords[i])
+
+        for i in range(len(coordinateslist)):
+            if i == (len(coordinateslist) - 1):
+                output += "  ".join(coordinateslist[i])
                 break
 
-            if coords[i - 1] == '#':
+            if coordinateslist[i - 1] == '#':
                 output += '\n'
 
-            output += "  ".join(coords[i])
+            output += "  ".join(coordinateslist[i])
             x += 1
             if x == self.size:
-                if coords[i + 1] == '#':
+                if coordinateslist[i + 1] == '#':
                     x = 0
                     continue
                 else:
