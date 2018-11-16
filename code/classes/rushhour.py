@@ -2,7 +2,7 @@ from board import Board
 from car import Car
 
 
-class RushHour():
+class RushHour(object):
     """
     Main file for running and solving the game
     """
@@ -183,7 +183,7 @@ class RushHour():
         distance = (self.board.size - self.cars["X"].x[1]) - 1
         if self.cars["X"].move_valid(distance, 1, self.board):
             print("Congratulations, you won!")
-            exit(0)
+            return True
         else:
             return False
 
