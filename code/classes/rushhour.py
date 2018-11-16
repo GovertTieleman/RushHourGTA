@@ -155,6 +155,6 @@ class RushHour():
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/TestGame.txt")
+    rushhour = RushHour("../../data/Game2.txt")
     rushhour.play()
 
