@@ -240,10 +240,6 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    rushhour = RushHour("../../data/Game2.txt")
-=======
     rushhour = RushHour("../../data/Game1.txt")
->>>>>>> d9f65870a4dd68221c4b8cacce60223ad22b7189
     rushhour.play()
 
