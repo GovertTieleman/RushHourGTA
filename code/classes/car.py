@@ -25,7 +25,8 @@ class Car(object):
                     return False
                 # Check free space of route
                 for step in range(1, distance):
-                    if board.coordinates[(self.x[i] + step * direction), self.y[i]] != '-':
+                    if board.coordinates[(self.x[i] + step * direction), self.y[i]] != '-' \
+                                and board.coordinates[(self.x[i] + step * direction), self.y[i]] != self.id:
                         return False
             return True
         elif self.orientation == 'VERTICAL':
@@ -42,4 +43,3 @@ class Car(object):
                     if board.coordinates[self.x[i], (self.y[i] + step * direction)] != '-':
                         return False
             return True
-
