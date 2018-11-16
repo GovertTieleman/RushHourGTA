@@ -1,17 +1,18 @@
-# Algoritme
+# Algoritme1
 from rushhour import RushHour
 
+
 # recursive function:
-def find_solution(rushhour, archive, winning_move_list, move_count):
-    if rushhour.board in archive:
+def find_solution(rushhour, boards, winning_move_list, move_count):
+    if rushhour.board in boards:
         return False
     else:
-        archive.append(rushhour.board)
+        boards.append(rushhour.board)
 
-    movelist = rushhour.find_moves()
+    move_list = rushhour.find_moves()
     move_count += 1
 
-    for move in movelist:
+    for move in move_list:
         car = move[0]
         if move[2] == "-":
             direction = -1
@@ -33,11 +34,11 @@ def find_solution(rushhour, archive, winning_move_list, move_count):
 # Initialize variables
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
+    game = RushHour("../../data/Game1.txt")
     archive = []
-    winning_move_list = []
-    move_count = 0
+    list_moves = []
+    count = 0
 
-    find_solution(rushhour, archive, winning_move_list, move_count)
+    find_solution(game, archive, list_moves, count)
 
     print(f"Winning moves: {winning_move_list}")
