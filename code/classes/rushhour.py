@@ -99,8 +99,6 @@ class RushHour(object):
                         self.moveslist.append(f"{car_id} {i}")
                         i += 1
 
-                # reset counter
-                i = 1
             # check if car is vertical
             if self.cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
@@ -136,9 +134,6 @@ class RushHour(object):
                         # append move to moveslist
                         self.moveslist.append(f"{car_id} {i}")
                         i += 1
-
-                # reset counter
-                i = 1
 
         for move in self.moveslist:
             print(move)
