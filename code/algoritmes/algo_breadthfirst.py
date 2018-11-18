@@ -1,6 +1,3 @@
-import collections
-from rushhour import RushHour
-
 def solve(board, cars, moves):
     while not won():
         explore_layer(board, cars, moves)

@@ -26,12 +26,13 @@ class RushHour(object):
         """
         # establish dictionary of coordinates
         coordinates = {}
+
+        # establish dictionary of cars
         self.cars = {}
 
         # establish move_history list and loop prevention dict
         self.move_history = []
         self.loop_prevention = {}
-
 
         # open file
         with open(filename, "r") as f:
@@ -234,6 +235,6 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
+    rushhour = RushHour("../../data/Game2.txt")
     rushhour.solve()
 

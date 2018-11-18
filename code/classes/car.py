@@ -43,3 +43,4 @@ class Car(object):
                     if board.coordinates[self.x[i], (self.y[i] + step * direction)] != '-':
                         return False
             return True
+

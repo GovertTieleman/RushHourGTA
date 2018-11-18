@@ -1,5 +1,7 @@
 from board import Board
 from car import Car
+import copy
+
 
 
 class RushHour(object):
@@ -25,7 +27,12 @@ class RushHour(object):
         """
         # establish dictionary of coordinates
         coordinates = {}
+
+        # establish dictionary of cars
         self.cars = {}
+
+        # establish move_history list and loop prevention dict
+        self.move_history = []
 
         # open file
         with open(filename, "r") as f:
@@ -58,27 +65,27 @@ class RushHour(object):
         # create board class
         self.board = Board(size, coordinates)
 
-    def find_moves(self):
+    def find_moves(self, board, cars):
         # initialize list of possible moves
         self.movest_list = []
 
         # iterate over all car objects
-        for car_id in self.cars:
+        for car_id in cars:
             # check if car is horizontal
-            if self.cars[car_id].orientation == 'HORIZONTAL':
+            if cars[car_id].orientation == 'HORIZONTAL':
                 # get leftmost and rightmost x of car
-                x_left = self.cars[car_id].x[0]
-                x_right = self.cars[car_id].x[len(self.cars[car_id].x) - 1]
+                x_left = cars[car_id].x[0]
+                x_right = cars[car_id].x[len(cars[car_id].x) - 1]
 
                 # get y of car
-                y_car = self.cars[car_id].y[0]
+                y_car = cars[car_id].y[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
                 while x_left - i > 0:
-                    if self.board.coordinates[(x_left - i), y_car] != '-':
+                    if board.coordinates[(x_left - i), y_car] != '-':
                         # break if no empty space
                         break
                     else:
@@ -90,8 +97,8 @@ class RushHour(object):
                 i = 1
 
                 # iterate over fields on the right side of car
-                while x_right + i < self.board.size:
-                    if self.board.coordinates[(x_right + i), y_car] != '-':
+                while x_right + i < board.size:
+                    if board.coordinates[(x_right + i), y_car] != '-':
                         # break if no empty space
                         break
                     else:
@@ -100,20 +107,20 @@ class RushHour(object):
                         i += 1
 
             # check if car is vertical
-            if self.cars[car_id].orientation == 'VERTICAL':
+            if cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
-                y_top = self.cars[car_id].y[0]
-                y_bottom = self.cars[car_id].y[len(self.cars[car_id].y) - 1]
+                y_top = cars[car_id].y[0]
+                y_bottom = cars[car_id].y[len(cars[car_id].y) - 1]
 
                 # get y of car
-                x_car = self.cars[car_id].x[0]
+                x_car = cars[car_id].x[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
                 while y_top - i > 0:
-                    if self.board.coordinates[x_car, (y_top - i)] != '-':
+                    if board.coordinates[x_car, (y_top - i)] != '-':
                         # break if no empty space
                         break
                     else:
@@ -125,8 +132,8 @@ class RushHour(object):
                 i = 1
 
                 # iterate over fields on the right side of car
-                while y_bottom + i < self.board.size:
-                    if self.board.coordinates[x_car, (y_bottom + i)] != '-':
+                while y_bottom + i < board.size:
+                    if board.coordinates[x_car, (y_bottom + i)] != '-':
                         # break if no empty space
                         i = 1
                         break
@@ -140,39 +147,46 @@ class RushHour(object):
 
         return self.movest_list
 
-    def move_car(self, car_id, distance, direction):
+    def move_car(self, command):
         """
         Execute a valid move command.
         """
-        # get car
-        car = self.cars[car_id]
+        # split command for use
+        command = command.split(' ')
 
-        # move up or down its axis
-        if car.move_valid(distance, direction, self.board):
-            if car.orientation == 'HORIZONTAL':
-                # replace the whole car on the board by empty squares and move car object
-                for i in range(len(car.x)):
-                    self.board.coordinates[car.x[i], car.y[i]] = '-'
-                    car.x[i] += distance * direction
-                # place the car in its new position on the board
-                for x in car.x:
-                    self.board.coordinates[x, car.y[0]] = car_id
-                # return true if move successful
-                return True
-            elif car.orientation == 'VERTICAL':
-                # replace the whole car on the board by empty squares and move car object
-                for i in range(len(car.y)):
-                    self.board.coordinates[car.x[i], car.y[i]] = '-'
-                    car.y[i] += distance * direction
-                # place the car in its new position on the board
-                for y in car.y:
-                    self.board.coordinates[car.x[0], y] = car_id
-                # return true if move successful
-                return True
+        # get car
+        car = self.cars[command[0]]
+
+        # get direction and distance
+        move = command[1]
+        if move[0] == '-':
+            direction = -1
+            distance = int(move[1:])
         else:
-            # return false if move unsuccessful
-            print(f"Invalid move\n")
-            return False
+            direction = 1
+            distance = int(move)
+
+        # move car
+        if car.orientation == 'HORIZONTAL':
+            # replace the whole car on the board by empty squares and move car object
+            for i in range(len(car.x)):
+                self.board.coordinates[car.x[i], car.y[i]] = '-'
+                car.x[i] += distance * direction
+            # place the car in its new position on the board
+            for x in car.x:
+                self.board.coordinates[x, car.y[0]] = car.id
+            # return true if move successful
+            return True
+        elif car.orientation == 'VERTICAL':
+            # replace the whole car on the board by empty squares and move car object
+            for i in range(len(car.y)):
+                self.board.coordinates[car.x[i], car.y[i]] = '-'
+                car.y[i] += distance * direction
+            # place the car in its new position on the board
+            for y in car.y:
+                self.board.coordinates[car.x[0], y] = car.id
+            # return true if move successful
+            return True
 
     def won(self):
         # get distance to exit for red car
@@ -180,58 +194,32 @@ class RushHour(object):
 
         # if red car can reach exit, game is won
         if self.cars["X"].move_valid(distance, 1, self.board):
-            print("Congratulations, you won!")
+            print(f"Congratulations, you won!\n"
+                  f"move history: {self.move_history}")
             return True
         else:
             return False
 
-    def play(self):
-        # Welcome player into game
-        print(f"This is GTA RushHour.\n"
-              "Input the car you want to move, followed by the direction and amount of steps.\n"
-              "The game is won once you reach the exit!\n")
+    def solve(self):
+        boards = [self.board]
+        car_configurations = {self.board: self.cars}
 
-        # Show the player the board
-        print(f"{self.board}\n")
-
-        # Prompt the user for commands until they've won the game.
         while not self.won():
-            # find moves
-            self.find_moves()
-
-            # get user input
-            command = input("move: ").split(' ')
-            car = command[0].upper()
-
-            # exit game if quit command
-            if car == "QUIT":
-                exit(0)
-            # if car doesn't exist, continue
-            elif car not in self.cars:
-                print("Car not in game, try again")
-                continue
-
-            # get direction and distance
-            move = command[1]
-            if move[0] == '-':
-                direction = -1
-                distance = move[1:]
-            else:
-                direction = 1
-                distance = move
-
-            # check if car, direction and distance all exist
-            if not car or not direction or not distance:
-                print("Invalid command, try again")
-                continue
-
-            # move
-            if self.move_car(car, int(direction), int(distance)):
-                # increment move counter
-                self.move_counter += 1
-
-                # print new board state
-                print(f"{self.board}\nMoves: {self.move_counter}\n")
+            for board in boards:
+                print(f"{board}\n")
+                current_board = copy.deepcopy(board)
+                current_cars = copy.deepcopy(car_configurations[board])
+                moves_list = self.find_moves(current_board, current_cars)
+                print(f"{current_board}\n")
+                for move in moves_list:
+                    self.move_car(move)
+                    if self.board not in boards:
+                        boards.append(self.board)
+                        car_configurations[self.board] = self.cars
+                    print(f"self.board:\n{self.board}\n")
+                    print(f"current_board:\n{current_board}\n")
+                    self.board = copy.deepcopy(current_board)
+                    self.cars = copy.deepcopy(current_cars)
 
     def __str__(self):
         return f"{self.board.coordinates}"
@@ -239,5 +227,5 @@ class RushHour(object):
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
-    rushhour.play()
+    rushhour.solve()
 
