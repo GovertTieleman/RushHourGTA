@@ -13,12 +13,13 @@ def find_solution(rushhour, boards, winning_move_list, move_count):
     move_count += 1
 
     for move in move_list:
+        winning_move_list += move
         car = move[0]
-        if move[2] == "-":
+        if move[1] == "-":
             direction = -1
         else:
             direction = 1
-        distance = move[-1:]
+        distance = move[2]
         rushhour.move_car(car, direction, int(distance))
         if rushhour.won():
             winning_move_list += move
@@ -41,4 +42,4 @@ if __name__ == "__main__":
 
     find_solution(game, archive, list_moves, count)
 
-    print(f"Winning moves: {winning_move_list}")
+    print(f"Winning moves: {list_moves}")
