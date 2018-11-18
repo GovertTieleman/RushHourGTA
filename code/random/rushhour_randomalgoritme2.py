@@ -150,8 +150,7 @@ class RushHour(object):
                         self.movest_list.append(f"{car_id} {i}")
                         i += 1
 
-        for move in self.movest_list:
-            print(move)
+        print(self.movest_list)
 
         return self.movest_list
 
@@ -217,6 +216,10 @@ class RushHour(object):
         current_board = copy.deepcopy(board)
         current_cars = copy.deepcopy(self.car_configurations[board])
 
+        print(f"{board}\n")
+        print(f"self.board:\n{self.board}\n")
+        print(f"current_board:\n{current_board}\n")
+
         # get list of possible moves
         move_list = self.find_moves(current_board, current_cars)
 
@@ -242,6 +245,7 @@ class RushHour(object):
         random_move = random.choice(move_list)
         print(random_move)
         rushhour.move_car(random_move)
+
 
         # check if game is won
         if rushhour.won():
