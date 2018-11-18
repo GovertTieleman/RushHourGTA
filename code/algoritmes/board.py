@@ -10,7 +10,7 @@ class Board(object):
         self.size = size
         self.coordinates = coordinates
 
-    def __str__(self):
+    def board_string(self):
         # create list of coordinates
         coordinateslist = []
         for coordinate in self.coordinates:

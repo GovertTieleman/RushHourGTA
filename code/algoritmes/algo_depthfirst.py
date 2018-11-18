@@ -42,4 +42,4 @@ if __name__ == "__main__":
 
     find_solution(game, archive, list_moves, count)
 
-    print(f"Winning moves: {list_moves}")
+    print(f"Winning moves: {winning_move_list}")
