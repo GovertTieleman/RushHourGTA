@@ -1,6 +1,8 @@
 from board import Board
 from car import Car
+import copy
 import random
+
 
 
 class RushHour(object):
@@ -26,11 +28,12 @@ class RushHour(object):
         """
         # establish dictionary of coordinates
         coordinates = {}
+
+        # establish dictionary of cars
         self.cars = {}
 
         # establish move_history list and loop prevention dict
-        self.loop_prevention = {}
-
+        self.move_history = []
 
         # open file
         with open(filename, "r") as f:
@@ -66,84 +69,91 @@ class RushHour(object):
         # create archive
         self.archive = [self.board]
 
-    def find_moves(self):
+        # create car configurations
+        self.car_configurations = {self.board: self.cars}
+
+
+    def find_moves(self, board, cars):
         # initialize list of possible moves
-        moves_list = []
+        self.movest_list = []
 
         # iterate over all car objects
-        for car_id in self.cars:
+        for car_id in cars:
             # check if car is horizontal
-            if self.cars[car_id].orientation == 'HORIZONTAL':
+            if cars[car_id].orientation == 'HORIZONTAL':
                 # get leftmost and rightmost x of car
-                x_left = self.cars[car_id].x[0]
-                x_right = self.cars[car_id].x[len(self.cars[car_id].x) - 1]
+                x_left = cars[car_id].x[0]
+                x_right = cars[car_id].x[len(cars[car_id].x) - 1]
 
                 # get y of car
-                y_car = self.cars[car_id].y[0]
+                y_car = cars[car_id].y[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
                 while x_left - i > 0:
-                    if self.board.coordinates[(x_left - i), y_car] != '-':
+                    if board.coordinates[(x_left - i), y_car] != '-':
                         # break if no empty space
                         break
                     else:
-                        # append move to moves_list
-                        moves_list.append(f"{car_id} {-i}")
+                        # append move to movest_list
+                        self.movest_list.append(f"{car_id} {-i}")
                         i += 1
 
                 # reset counter
                 i = 1
 
                 # iterate over fields on the right side of car
-                while x_right + i < self.board.size:
-                    if self.board.coordinates[(x_right + i), y_car] != '-':
+                while x_right + i < board.size:
+                    if board.coordinates[(x_right + i), y_car] != '-':
                         # break if no empty space
                         break
                     else:
-                        # append move to moves_list
-                        moves_list.append(f"{car_id} {i}")
+                        # append move to movest_list
+                        self.movest_list.append(f"{car_id} {i}")
                         i += 1
 
             # check if car is vertical
-            if self.cars[car_id].orientation == 'VERTICAL':
+            if cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
-                y_top = self.cars[car_id].y[0]
-                y_bottom = self.cars[car_id].y[len(self.cars[car_id].y) - 1]
+                y_top = cars[car_id].y[0]
+                y_bottom = cars[car_id].y[len(cars[car_id].y) - 1]
 
                 # get y of car
-                x_car = self.cars[car_id].x[0]
+                x_car = cars[car_id].x[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
                 while y_top - i > 0:
-                    if self.board.coordinates[x_car, (y_top - i)] != '-':
+                    if board.coordinates[x_car, (y_top - i)] != '-':
                         # break if no empty space
                         break
                     else:
-                        # append move to moves_list
-                        moves_list.append(f"{car_id} {-i}")
+                        # append move to movest_list
+                        self.movest_list.append(f"{car_id} {-i}")
                         i += 1
 
                 # reset counter
                 i = 1
 
                 # iterate over fields on the right side of car
-                while y_bottom + i < self.board.size:
-                    if self.board.coordinates[x_car, (y_bottom + i)] != '-':
+                while y_bottom + i < board.size:
+                    if board.coordinates[x_car, (y_bottom + i)] != '-':
                         # break if no empty space
                         i = 1
                         break
                     else:
-                        # append move to moves_list
-                        moves_list.append(f"{car_id} {i}")
+                        # append move to movest_list
+                        self.movest_list.append(f"{car_id} {i}")
                         i += 1
 
-        return moves_list
+        for move in self.movest_list:
+            print(move)
+
+        return self.movest_list
 
     def move_car(self, command):
         """
@@ -199,11 +209,16 @@ class RushHour(object):
             return False
 
     def solve(self):
-        self.random_solve(self.archive)
+        self.random_solve(self.archive, self.board)
 
-    def random_solve(self, archive):
+    def random_solve(self, archive, board):
+
+        # make copies of board and cars
+        current_board = copy.deepcopy(board)
+        current_cars = copy.deepcopy(self.car_configurations[board])
+
         # get list of possible moves
-        move_list = rushhour.find_moves()
+        move_list = self.find_moves(current_board, current_cars)
 
         # if there are no more possible moves to make
         if not move_list:
@@ -213,33 +228,33 @@ class RushHour(object):
         # create board for every possible move (in string form)
         for move in move_list:
 
+            # make move
+            rushhour.move_car(move)
+
+            # create new board for every move
+            new_board = self.board
+
             # delete already encountered boards
             if new_board in archive:
                 move_list.remove(move)
 
-                # create new board for every move
-                new_board = self.board
-
         # pick random move from move_list
-        command = random.choice(move_list)
-
-        # create board after random move
-        current_board = rushhour.move_car(command)
-
-        # make move
-        rushhour.move_car(command)
+        random_move = random.choice(move_list)
+        print(random_move)
+        rushhour.move_car(random_move)
 
         # check if game is won
         if rushhour.won():
             # Stop, return solution!
             return True
 
+        current_board = self.board
+
         # save current board to archive
         archive.append(current_board)
 
         # recursively call this function again
-        rushhour.random_solve(archive)
-
+        rushhour.random_solve(archive, current_board)
 
 
     def __str__(self):
