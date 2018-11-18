@@ -235,6 +235,6 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game2.txt")
+    rushhour = RushHour("../../data/Game3.txt")
     rushhour.solve()
 

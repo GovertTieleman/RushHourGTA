@@ -29,7 +29,6 @@ class RushHour(object):
         self.cars = {}
 
         # establish move_history list and loop prevention dict
-        self.archive = [self.board]
         self.loop_prevention = {}
 
 
@@ -63,6 +62,9 @@ class RushHour(object):
 
         # create board class
         self.board = Board(size, coordinates)
+
+        # create archive
+        self.archive = [self.board]
 
     def find_moves(self):
         # initialize list of possible moves
@@ -196,7 +198,10 @@ class RushHour(object):
         else:
             return False
 
-    def random_solve(self, archive, current_board):
+    def solve(self):
+        self.random_solve(self.archive)
+
+    def random_solve(self, archive):
         # get list of possible moves
         move_list = rushhour.find_moves()
 
@@ -233,7 +238,7 @@ class RushHour(object):
         archive.append(current_board)
 
         # recursively call this function again
-        rushhour.random_solve(archive, current_board)
+        rushhour.random_solve(archive)
 
 
 
@@ -243,5 +248,5 @@ class RushHour(object):
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
-    rushhour.random_solve()
+    rushhour.solve()
 
