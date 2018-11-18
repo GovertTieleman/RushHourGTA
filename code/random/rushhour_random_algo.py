@@ -212,7 +212,7 @@ class RushHour(object):
             # check if move has been executed on same board before
             if command in self.loop_prevention:
                 if board in self.loop_prevention[command]:
-                    print(f"{self.loop_prevention[command]}\nmoves: {self.move_counter}\n command: {command}")
+                    print(f"{self.loop_prevention[command]}\n moves: {self.move_counter}\n command: {command}")
                     continue
                 else:
                     self.loop_prevention[command].append(board)

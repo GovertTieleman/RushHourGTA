@@ -29,7 +29,7 @@ class RushHour(object):
         self.cars = {}
 
         # establish move_history list and loop prevention dict
-        self.archive = []
+        self.archive = [self.board]
         self.loop_prevention = {}
 
 
@@ -200,33 +200,23 @@ class RushHour(object):
         # get list of possible moves
         move_list = rushhour.find_moves()
 
-        # create board for every possible move (in string form)
-        for move in move_list:
-            car = move[0]
-            if move[2] == "-":
-                direction = -1
-            else:
-                direction = 1
-            distance = move[-1:]
-
-            new_board = str(rushhour.move_car(move))
-
-            # delete already encountered boards
-            if new_board in archive:
-                move_list.remove(move)
-
         # if there are no more possible moves to make
         if not move_list:
             # Stop, no solution!
             return False
 
+        # create board for every possible move (in string form)
+        for move in move_list:
+
+            # delete already encountered boards
+            if new_board in archive:
+                move_list.remove(move)
+
+                # create new board for every move
+                new_board = self.board
+
         # pick random move from move_list
         command = random.choice(move_list)
-        if command[2] == "-":
-            direction = -1
-        else:
-            direction = 1
-        distance = move[-1:]
 
         # create board after random move
         current_board = rushhour.move_car(command)
@@ -253,5 +243,5 @@ class RushHour(object):
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game1.txt")
-    rushhour.random_solve(rushhour.archive, rushhour.board)
+    rushhour.random_solve()
 
