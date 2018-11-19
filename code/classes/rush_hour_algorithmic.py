@@ -1,5 +1,8 @@
-from board import Board
-from car import Car
+import sys
+sys.path.insert(0, '../')
+
+from classes.board import Board
+from classes.car import Car
 import copy
 
 
