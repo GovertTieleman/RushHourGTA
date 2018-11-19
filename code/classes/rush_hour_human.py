@@ -58,27 +58,27 @@ class RushHour(object):
         # create board class
         self.board = Board(size, coordinates)
 
-    def find_moves(self):
+    def find_moves(self, board, cars):
         # initialize list of possible moves
         self.movest_list = []
 
         # iterate over all car objects
-        for car_id in self.cars:
+        for car_id in cars:
             # check if car is horizontal
-            if self.cars[car_id].orientation == 'HORIZONTAL':
+            if cars[car_id].orientation == 'HORIZONTAL':
                 # get leftmost and rightmost x of car
-                x_left = self.cars[car_id].x[0]
-                x_right = self.cars[car_id].x[len(self.cars[car_id].x) - 1]
+                x_left = cars[car_id].x[0]
+                x_right = cars[car_id].x[len(cars[car_id].x) - 1]
 
                 # get y of car
-                y_car = self.cars[car_id].y[0]
+                y_car = cars[car_id].y[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
                 while x_left - i > 0:
-                    if self.board.coordinates[(x_left - i), y_car] != '-':
+                    if board.coordinates[(x_left - i), y_car] != '-':
                         # break if no empty space
                         break
                     else:
@@ -90,8 +90,8 @@ class RushHour(object):
                 i = 1
 
                 # iterate over fields on the right side of car
-                while x_right + i < self.board.size:
-                    if self.board.coordinates[(x_right + i), y_car] != '-':
+                while x_right + i < board.size:
+                    if board.coordinates[(x_right + i), y_car] != '-':
                         # break if no empty space
                         break
                     else:
@@ -100,20 +100,20 @@ class RushHour(object):
                         i += 1
 
             # check if car is vertical
-            if self.cars[car_id].orientation == 'VERTICAL':
+            if cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
-                y_top = self.cars[car_id].y[0]
-                y_bottom = self.cars[car_id].y[len(self.cars[car_id].y) - 1]
+                y_top = cars[car_id].y[0]
+                y_bottom = cars[car_id].y[len(cars[car_id].y) - 1]
 
                 # get y of car
-                x_car = self.cars[car_id].x[0]
+                x_car = cars[car_id].x[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
                 while y_top - i > 0:
-                    if self.board.coordinates[x_car, (y_top - i)] != '-':
+                    if board.coordinates[x_car, (y_top - i)] != '-':
                         # break if no empty space
                         break
                     else:
@@ -125,8 +125,8 @@ class RushHour(object):
                 i = 1
 
                 # iterate over fields on the right side of car
-                while y_bottom + i < self.board.size:
-                    if self.board.coordinates[x_car, (y_bottom + i)] != '-':
+                while y_bottom + i < board.size:
+                    if board.coordinates[x_car, (y_bottom + i)] != '-':
                         # break if no empty space
                         i = 1
                         break
@@ -197,7 +197,7 @@ class RushHour(object):
         # Prompt the user for commands until they've won the game.
         while not self.won():
             # find moves
-            self.find_moves()
+            self.find_moves(self.board, self.cars)
 
             # get user input
             command = input("move: ").split(' ')

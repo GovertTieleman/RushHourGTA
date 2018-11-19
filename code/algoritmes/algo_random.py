@@ -3,3 +3,4 @@ import random
 
 def random(moveslist):
     random.choice(moveslist)
+

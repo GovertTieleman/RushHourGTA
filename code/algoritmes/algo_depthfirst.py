@@ -1,45 +1,44 @@
 # Algoritme1
-from rushhour import RushHour
+from rushhour_random_algo import RushHour
 
+class Algorithm(object):
+    """
+    Main file for running and solving the game
+    """
 
-# recursive function:
-def find_solution(rushhour, boards, winning_move_list, move_count):
-    if rushhour.board in boards:
-        return False
-    else:
-        boards.append(rushhour.board)
+    def __init__(self, game):
+        self.game = game
+        self.archive = []
+        self.moves_list = []
 
-    move_list = rushhour.find_moves()
-    move_count += 1
+    # recursive function:
+    def find_solution(self, move_count):
 
-    for move in move_list:
-        winning_move_list += move
-        car = move[0]
-        if move[1] == "-":
-            direction = -1
+        # Check and update archive
+        current_map = self.game.board.board_string()
+        if current_map in self.archive:
+            return False
         else:
-            direction = 1
-        distance = move[2]
-        rushhour.move_car(car, direction, int(distance))
-        if rushhour.won():
-            winning_move_list += move
-            return True
-        else:
-            if find_solution(rushhour, archive, winning_move_list, move_count):
-                winning_move_list += move
+            self.archive.append(current_map)
+
+        # Initialize move list
+        move_list = self.game.find_moves()
+        move_count += 1
+
+        # Iterate over moves
+        for move in move_list:
+            self.game.move_car(move)
+            if self.game.won():
+                self.moves_list += move
                 return True
-            else:
-                return False
-
-
-# Initialize variables
+            elif self.find_solution(move_count):
+                self.moves_list += move
+                return True
+        return False
 
 if __name__ == "__main__":
     game = RushHour("../../data/Game1.txt")
-    archive = []
-    list_moves = []
+    solution = Algorithm(game)
     count = 0
-
-    find_solution(game, archive, list_moves, count)
-
-    print(f"Winning moves: {winning_move_list}")
+    solution.find_solution(count)
+    print(f"Winning moves: {solution.moves_list}")
