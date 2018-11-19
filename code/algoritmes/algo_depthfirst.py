@@ -1,5 +1,8 @@
 # Algoritme1
-from rushhour_random_algo import RushHour
+import sys
+sys.path.insert(0, '../')
+
+from classes.rush_hour_depth_first import RushHour
 
 class Algorithm(object):
     """
