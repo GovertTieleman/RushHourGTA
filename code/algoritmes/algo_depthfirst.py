@@ -12,7 +12,7 @@ class Algorithm(object):
     def __init__(self, game):
         self.game = game
         self.archive = []
-        self.moves_list = []
+        self.winning_moves_list = []
 
     # recursive function:
     def find_solution(self, move_count):
@@ -32,10 +32,10 @@ class Algorithm(object):
         for move in move_list:
             self.game.move_car(move)
             if self.game.won():
-                self.moves_list += move
+                self.winning_moves_list += move
                 return True
             elif self.find_solution(move_count):
-                self.moves_list += move
+                self.winning_moves_list += move
                 return True
             else:
                 self.game.revert_move(move)
@@ -46,4 +46,4 @@ if __name__ == "__main__":
     solution = Algorithm(game)
     count = 0
     solution.find_solution(count)
-    print(f"Winning moves: {solution.moves_list}")
+    print(f"Winning moves: {solution.winning_moves_list}")
