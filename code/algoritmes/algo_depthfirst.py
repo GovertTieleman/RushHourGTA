@@ -37,6 +37,8 @@ class Algorithm(object):
             elif self.find_solution(move_count):
                 self.moves_list += move
                 return True
+            else:
+                self.game.revert_move(move)
         return False
 
 if __name__ == "__main__":
