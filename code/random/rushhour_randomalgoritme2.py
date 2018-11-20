@@ -208,38 +208,37 @@ class RushHour(object):
             return False
 
     def solve(self):
-        self.random_solve(self.archive, self.board)
+        self.random_solve(rushhour, self.archive)
 
-    def random_solve(self, archive, board):
+    def random_solve(self, rushhour, archive):
 
-        # make copies of board and cars
-        current_board = copy.deepcopy(board)
-        current_cars = copy.deepcopy(self.car_configurations[board])
+        # make copies rushhour
+        temp_rushhour = copy.deepcopy(rushhour)
 
-        print(f"{board}\n")
-        print(f"self.board:\n{self.board}\n")
-        print(f"current_board:\n{current_board}\n")
+        # print(f"{board}\n")
+        print(f"temp_rushhour.board:\n{temp_rushhour.board}\n")
+        # print(f"current_board:\n{current_board}\n")
 
         # get list of possible moves
-        move_list = self.find_moves(current_board, current_cars)
-
-        # if there are no more possible moves to make
-        if not move_list:
-            # Stop, no solution!
-            return False
+        move_list = self.find_moves(rushhour.board, rushhour.cars)
 
         # create board for every possible move (in string form)
         for move in move_list:
 
             # make move
-            rushhour.move_car(move)
+            temp_rushhour.move_car(move)
 
             # create new board for every move
-            new_board = self.board
+            new_board = temp_rushhour.board
 
             # delete already encountered boards
             if new_board in archive:
                 move_list.remove(move)
+
+        # if there are no more possible moves to make
+        if not move_list:
+            # Stop, no solution!
+            return False
 
         # pick random move from move_list
         random_move = random.choice(move_list)
@@ -252,13 +251,11 @@ class RushHour(object):
             # Stop, return solution!
             return True
 
-        current_board = self.board
-
         # save current board to archive
-        archive.append(current_board)
+        archive.append(rushhour.board)
 
         # recursively call this function again
-        rushhour.random_solve(archive, current_board)
+        rushhour.random_solve(rushhour, archive)
 
 
     def __str__(self):
