@@ -152,7 +152,7 @@ Main file for running and solving the game
         command = command.split(' ')
 
         # get car
-        car = self.cars[command[0]]
+        car = self.cars[command[0].upper()]
 
         # get direction and distance
         move = command[1]
@@ -187,7 +187,7 @@ Main file for running and solving the game
                 return True
         else:
             # return false if move unsuccessful
-            print(f"Invalid move\n")
+            print(f"Invalid move, {command}\n")
             return False
 
     def revert_move(self, command):
@@ -259,7 +259,7 @@ Main file for running and solving the game
             self.find_moves()
 
             # get user input
-            command = input("move: ").split(' ')
+            command = input("move: ")
             car = command[0].upper()
 
             # exit game if quit command
@@ -270,22 +270,13 @@ Main file for running and solving the game
                 print("Car not in game, try again")
                 continue
 
-            # get direction and distance
-            move = command[1]
-            if move[0] == '-':
-                direction = -1
-                distance = move[1:]
-            else:
-                direction = 1
-                distance = move
-
             # check if car, direction and distance all exist
-            if not car or not direction or not distance:
+            if not car:
                 print("Invalid command, try again")
                 continue
 
             # move
-            if self.move_car(car, int(direction), int(distance)):
+            if self.move_car(command):
                 # increment move counter
                 self.move_counter += 1
 
@@ -297,5 +288,5 @@ Main file for running and solving the game
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
+    rushhour = RushHour("../../data/BugMap.txt")
     rushhour.play()

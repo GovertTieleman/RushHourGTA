@@ -19,21 +19,25 @@ class Algorithm(object):
 
         # Check and update archive
         current_map = self.game.board.board_string()
-        if current_map in self.archive:
-            return False
-        else:
-            self.archive.append(current_map)
+        self.archive.append(current_map)
 
         # Initialize move list
         move_list = self.game.find_moves()
         move_count += 1
+        if move_count == 300:
+            print("terminating")
+            return False
 
         # Iterate over moves
         for move in move_list:
             self.game.move_car(move)
+            new_map = self.game.board.board_string()
             if self.game.won():
+                print(move_count)
                 self.winning_moves_list += move
                 return True
+            elif new_map in self.archive:
+                self.game.revert_move(move)
             elif self.find_solution(move_count):
                 self.winning_moves_list += move
                 return True
@@ -42,7 +46,7 @@ class Algorithm(object):
         return False
 
 if __name__ == "__main__":
-    game = RushHour("../../data/Game1.txt")
+    game = RushHour("../../data/Game3.txt")
     solution = Algorithm(game)
     count = 0
     solution.find_solution(count)
