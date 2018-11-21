@@ -1,7 +1,11 @@
-from board import Board
+import sys
+sys.path.insert(0, '../')
+
+# from board import Board
 from car import Car
 import copy
 import random
+from classes.board import Board
 
 
 
@@ -68,6 +72,8 @@ class RushHour(object):
 
         # create archive
         self.archive = [self.board]
+
+        self.recursion_count = 0
 
         # create car configurations
         self.car_configurations = {self.board: self.cars}
@@ -150,7 +156,7 @@ class RushHour(object):
                         self.movest_list.append(f"{car_id} {i}")
                         i += 1
 
-        print(self.movest_list)
+        print(f"Possible moves: {self.movest_list}")
 
         return self.movest_list
 
@@ -207,55 +213,123 @@ class RushHour(object):
         else:
             return False
 
-    def solve(self):
-        self.random_solve(rushhour, self.archive)
+    def revert_move(self, command):
+        """
+    Revert a move command.
+    """
+        # split command for use
+        command = command.split(' ')
 
-    def random_solve(self, rushhour, archive):
+        # get car
+        car = self.cars[command[0]]
 
-        # make copies rushhour
-        temp_rushhour = copy.deepcopy(rushhour)
+        # get direction and distance
+        move = command[1]
+        if move[0] == '-':
+            direction = 1
+            distance = int(move[1:])
+        else:
+            direction = -1
+            distance = int(move)
 
-        # print(f"{board}\n")
-        print(f"temp_rushhour.board:\n{temp_rushhour.board}\n")
-        # print(f"current_board:\n{current_board}\n")
-
-        # get list of possible moves
-        move_list = self.find_moves(rushhour.board, rushhour.cars)
-
-        # create board for every possible move (in string form)
-        for move in move_list:
-
-            # make move
-            temp_rushhour.move_car(move)
-
-            # create new board for every move
-            new_board = temp_rushhour.board
-
-            # delete already encountered boards
-            if new_board in archive:
-                move_list.remove(move)
-
-        # if there are no more possible moves to make
-        if not move_list:
-            # Stop, no solution!
-            return False
-
-        # pick random move from move_list
-        random_move = random.choice(move_list)
-        print(random_move)
-        rushhour.move_car(random_move)
-
-
-        # check if game is won
-        if rushhour.won():
-            # Stop, return solution!
+        # move up or down its axis
+        # if car.move_valid(distance, direction, self.board):
+        if car.orientation == 'HORIZONTAL':
+            # replace the whole car on the board by empty squares and move car object
+            for i in range(len(car.x)):
+                self.board.coordinates[car.x[i], car.y[i]] = '-'
+                car.x[i] += distance * direction
+            # place the car in its new position
+            for x in car.x:
+                self.board.coordinates[x, car.y[0]] = car.id
+            # return true if move successful
             return True
+        elif car.orientation == 'VERTICAL':
+            # replace the whole car on the board by empty squares and move car object
+            for i in range(len(car.y)):
+                self.board.coordinates[car.x[i], car.y[i]] = '-'
+                car.y[i] += distance * direction
+            # place the car in its new position
+            for y in car.y:
+                self.board.coordinates[car.x[0], y] = car.id
+            # return true if move successful ..
+            return True
+        # else:
+        #     # return false if move unsuccessful
+        #     print(f"Invalid move\n")
+        #     return False
 
-        # save current board to archive
-        archive.append(rushhour.board)
+
+
+
+
+    def solve(self):
+        self.random_solve(rushhour, self.archive, self.recursion_count)
+
+    def random_solve(self, rushhour, archive, recursion_count):
+
+        # for sitch in archive:
+        #     print(f"board in archive: \n{board_string}")
+
+        print(f"Number of moves: {recursion_count}")
+        print(f"first board: \n{archive[0]}\n")
+
+
+        if recursion_count == 3:
+            print("More than 3 moves!")
+            return False
+        else:
+            # get list of possible moves
+            move_list = rushhour.find_moves(rushhour.board, rushhour.cars)
+
+            # create board for every possible move (in string form)
+            for move in move_list:
+
+                # make move
+                # print(f"Board before move: \n{rushhour.board}")
+                # print(f"Move: {move}")
+                rushhour.move_car(move)
+                # print(f"Board after move: \n{rushhour.board}")
+
+                # delete already encountered boards
+                if rushhour.board in archive:
+                    print(f"Board already in archive: \n{rushhour.board}")
+                    move_list.remove(move)
+
+                # revert move
+                rushhour.revert_move(move)
+
+            print(f"possible moves not encountered: {move_list}")
+
+            # if there are no more possible moves to make
+            if not move_list:
+                # Stop, no solution!
+                return False
+
+            # pick random move from move_list
+            random_move = random.choice(move_list)
+            print("random move: "+ random_move)
+
+            print(f"Board before random move: \n{rushhour.board}")
+            rushhour.move_car(random_move)
+            print(f"Board after random move: \n{rushhour.board}")
+
+
+
+            # check if game is won
+            if rushhour.won():
+                # Stop, return solution!
+                print("Game is won!")
+                return True
+
+            # save current board to archive
+            archive.append(copy.deepcopy(rushhour.board))
+            print(f"Board added to archive: \n{rushhour.board}")
+
+        recursion_count += 1
 
         # recursively call this function again
-        rushhour.random_solve(rushhour, archive)
+        rushhour.random_solve(rushhour, archive, recursion_count)
 
 
     def __str__(self):
@@ -263,6 +337,6 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
+    rushhour = RushHour("../../data/TestGame.txt")
     rushhour.solve()
 
