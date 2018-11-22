@@ -1,11 +1,10 @@
 import sys
 sys.path.insert(0, '../')
 
-# from board import Board
-from car import Car
+from classes.board import Board
+from classes.car import Car
 import copy
 import random
-from classes.board import Board
 
 
 
@@ -77,10 +76,6 @@ class RushHour(object):
         self.allowed_moves = []
 
         self.recursion_count = 0
-
-        # create car configurations
-        self.car_configurations = {self.board: self.cars}
-
 
     def find_moves(self, board, cars):
         # initialize list of possible moves
@@ -265,34 +260,38 @@ class RushHour(object):
 
 
 
-
     def solve(self, rushhour):
         self.random_solve(rushhour, self.archive, self.recursion_count)
 
     def random_solve(self, rushhour, archive, recursion_count):
 
-        print(f"Number of moves: {recursion_count}\n")
+        # print number of moves already made
+        print(f"Number of moves already made: {recursion_count}\n")
 
-        print(f"Current board: \n{rushhour.board}\n")
+        print(f"Current board (before making move): \n{rushhour.board}\n")
 
-        if recursion_count == 500:
-            print("More than 500 moves!")
+        if recursion_count == 990:
+            print("More than 990 moves!")
             return False
         else:
             # get list of possible moves
             move_list = rushhour.find_moves(rushhour.board, rushhour.cars)
 
-            # create board for every possible move (in string form)
+            # create board for every possible move
             for move in move_list:
 
                 # make move
                 rushhour.move_car(move)
 
-                # delete already encountered boards
+                # if board is not in archive yet
+                in_archive = False
                 for board in archive:
-                    if board != rushhour.board.board_string():
-                        self.allowed_moves.append(move)
-                        # break
+                    if board == rushhour.board.board_string():
+                        in_archive = True
+
+                if in_archive is False:
+                    # add board to list of allowed moves
+                    self.allowed_moves.append(move)
 
                 # revert move
                 rushhour.revert_move(move)
@@ -304,8 +303,12 @@ class RushHour(object):
 
             # pick random move from move_list
             random_move = random.choice(self.allowed_moves)
-            print("random move: "+ random_move)
 
+            # empty list of allowed moves
+            del self.allowed_moves[:]
+            print("Random move to make is: "+ random_move)
+
+            # make move and save move to move_history list
             rushhour.move_car(random_move)
             self.move_history.append(random_move)
 
@@ -314,10 +317,6 @@ class RushHour(object):
                 # Stop, return solution!
                 print(f"Game is won! (in {recursion_count} moves)")
                 return True
-
-            # makes copies of board and cars
-            # current_board = copy.deepcopy(rushhour.board)
-            # current_cars = copy.deepcopy(rushhour.car_configurations[rushhour.board])
 
             # save current board to archive
             archive.append(copy.copy(rushhour.board.board_string()))
@@ -334,6 +333,6 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
+    rushhour = RushHour("../../data/Game2.txt")
     rushhour.solve(rushhour)
 
