@@ -24,7 +24,7 @@ class Car(object):
                         and board.coordinates[(self.x[i] + distance * direction), self.y[i]] != self.id:
                     return False
                 # Check free space of route
-                for step in range(1, distance):
+                for step in range(1, distance + 1):
                     if board.coordinates[(self.x[i] + step * direction), self.y[i]] != '-' \
                                 and board.coordinates[(self.x[i] + step * direction), self.y[i]] != self.id:
                         return False
@@ -33,13 +33,18 @@ class Car(object):
             for i in range(len(self.y)):
                 # Check bounds
                 if (self.y[i] + distance * direction) < 1 or (self.y[i] + distance * direction) > board.size:
+                    print("1")
                     return False
                 # Check free space of destination
                 if board.coordinates[self.x[i], (self.y[i] + distance * direction)] != '-' \
                         and board.coordinates[self.x[i], (self.y[i] + distance * direction)] != self.id:
+                    print("2")
                     return False
                 # Check free space of route
-                for step in range(1, distance):
-                    if board.coordinates[self.x[i], (self.y[i] + step * direction)] != '-':
+                for step in range(1, distance + 1):
+                    if board.coordinates[self.x[i], (self.y[i] + step * direction)] != '-' \
+                                and board.coordinates[self.x[i], (self.y[i] + step * direction)] != self.id:
+                        print("3")
                         return False
             return True
+
