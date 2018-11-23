@@ -31,8 +31,9 @@ class Algorithm(object):
         current_map = self.game.board.board_string()
         self.archive.append(current_map)
 
-        # Initialize move list
+        # Update position
         move_list = self.game.find_moves()
+        print(f"\n{current_map}:\nmove count:{move_count}\n")
         # if move_count > 0:
         #     # print(f"last move:{last_move}")
         #     reverse_move = self.revert(last_move)
@@ -42,7 +43,7 @@ class Algorithm(object):
 
         # Check limit
         move_count += 1
-        if move_count == 35:
+        if move_count == 5000:
             return False
 
         # Iterate over moves
@@ -66,7 +67,7 @@ class Algorithm(object):
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game1.txt")
+    game = RushHour("../../data/Game2.txt")
     solution = Algorithm(game)
     count = 0
     move = ""
