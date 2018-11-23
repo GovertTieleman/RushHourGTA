@@ -1,6 +1,7 @@
 # Algoritme1
 import sys
 sys.path.insert(0, '../')
+sys.setrecursionlimit(10001)
 
 from classes.rush_hour_depth_first import RushHour
 
@@ -13,10 +14,18 @@ class Algorithm(object):
         self.game = game
         self.archive = []
         self.winning_moves_list = []
-        self.end_board = []
+        self.end_board = ""
+
+    def revert(self, move):
+        if "-" in move:
+            reverse_move = move.replace("-", "")
+            return reverse_move
+        else:
+            reverse_move = move.replace(" ", " -")
+            return reverse_move
 
     # recursive function:
-    def find_solution(self, move_count):
+    def find_solution(self, move_count, last_move):
 
         # Check and update archive
         current_map = self.game.board.board_string()
@@ -24,11 +33,16 @@ class Algorithm(object):
 
         # Initialize move list
         move_list = self.game.find_moves()
+        # if move_count > 0:
+        #     # print(f"last move:{last_move}")
+        #     reverse_move = self.revert(last_move)
+        #     # print(f"reverse move:{reverse_move}")
+        #     move_list.remove(reverse_move)
         # move_list.reverse()
 
         # Check limit
         move_count += 1
-        if move_count == 995:
+        if move_count == 35:
             return False
 
         # Iterate over moves
@@ -37,12 +51,12 @@ class Algorithm(object):
             new_map = self.game.board.board_string()
             if self.game.won():
                 print(f"moves: {move_count}")
-                self.end_board.append(self.game.board)
+                self.end_board = self.game.board
                 self.winning_moves_list.append(move)
                 return True
             elif new_map in self.archive:
                 self.game.revert_move(move)
-            elif self.find_solution(move_count):
+            elif self.find_solution(move_count, move):
                 self.winning_moves_list.append(move)
                 return True
             else:
@@ -50,13 +64,18 @@ class Algorithm(object):
         return False
 
 if __name__ == "__main__":
-    game = RushHour("../../data/Game6.txt")
+
+    # Initialize Algorithm
+    game = RushHour("../../data/Game1.txt")
     solution = Algorithm(game)
-    count = 1
+    count = 0
+    move = ""
     print(solution.game.board)
-    solution.find_solution(count)
+    solution.find_solution(count, move)
+
+    # Result
     solution.winning_moves_list.reverse()
     print(f"Winning moves: {solution.winning_moves_list}")
     if solution.end_board:
-        print(f"Final board:\n{solution.end_board[0]}")
+        print(f"Final board:\n{solution.end_board}")
     print(f"Archive size: {len(solution.archive)}")
