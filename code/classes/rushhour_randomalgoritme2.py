@@ -1,5 +1,6 @@
 import sys
 sys.path.insert(0, '../')
+sys.setrecursionlimit(10000)
 
 from classes.board import Board
 from classes.car import Car
@@ -270,8 +271,8 @@ class RushHour(object):
 
         print(f"Current board (before making move): \n{rushhour.board}\n")
 
-        if recursion_count == 990:
-            print("More than 990 moves!")
+        if recursion_count == 1100:
+            print("More than 1100 moves!")
             return False
         else:
             # get list of possible moves
@@ -298,14 +299,30 @@ class RushHour(object):
 
             # if there are no more possible moves to make
             if not self.allowed_moves:
-                print("No solution!")
+                print("No more moves to make!\n\nReverting move and trying different move...\n\n")
+                # add board to archive
+                archive.append(copy.copy(rushhour.board.board_string()))
+                # revert last move made
+                if not self.move_history:
+                    print("\nNo solution found!\n")
+                    return False
+                else:
+                    rushhour.revert_move(self.move_history[-1])
+                    # delete last move from move history
+                    del self.move_history[-1]
+                    # keep track of number of moves
+                    recursion_count += 1
+                    # recursively call function again
+                    rushhour.random_solve(rushhour, archive, recursion_count)
+                    # return False
+
+            if not self.allowed_moves:
+                print("\nNo solution found!\n")
                 return False
 
             # pick random move from move_list
             random_move = random.choice(self.allowed_moves)
 
-            # empty list of allowed moves
-            del self.allowed_moves[:]
             print("Random move to make is: "+ random_move)
 
             # make move and save move to move_history list
@@ -313,9 +330,9 @@ class RushHour(object):
             self.move_history.append(random_move)
 
             # check if game is won
-            if rushhour.won():
+            if rushhour.won() is True:
                 # Stop, return solution!
-                print(f"Game is won! (in {recursion_count} moves)")
+                print(f"Game is won! (in {len(self.move_history)} moves)")
                 return True
 
             # save current board to archive
@@ -323,6 +340,9 @@ class RushHour(object):
 
         # keep track of number of moves
         recursion_count += 1
+
+        # empty list of allowed moves
+        del self.allowed_moves[:]
 
         # recursively call this function again
         rushhour.random_solve(rushhour, archive, recursion_count)
