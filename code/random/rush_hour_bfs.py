@@ -109,7 +109,7 @@ class RushHour(object):
                 if board.won():
                     return 0
 
-                # if new board
+                # check if new board
                 new_candidate = board.board_string
                 for existing in boards:
                     # prune queue
@@ -134,7 +134,7 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game2.txt")
+    rushhour = RushHour("../../data/Game1.txt")
     rushhour.solve()
 
 
