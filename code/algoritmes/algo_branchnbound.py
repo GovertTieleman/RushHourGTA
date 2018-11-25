@@ -28,7 +28,7 @@ class Algorithm(object):
 
         # Check limit
         move_count += 1
-        if move_count == 21:
+        if move_count == 15:
             return False
 
         # Iterate over valid moves
@@ -60,7 +60,7 @@ class Algorithm(object):
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game3.txt")
+    game = RushHour("../../data/Game2.txt")
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     # Result
     if solution.end_board:
         solution.winning_moves_list.reverse()
-        print("Solution:", ", ".join(solution.winning_moves_list), f"\nFinal board:\n{solution.end_board}")
+        print("Solution:", ", ".join(solution.winning_moves_list), ", X -> #" f"\nFinal board:\n{solution.end_board}")
     else:
         print("No solution found")
     print(f"Archive size: {len(solution.archive)}\n")
