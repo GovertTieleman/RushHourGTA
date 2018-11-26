@@ -42,11 +42,11 @@ class Algorithm(object):
                 self.game.revert_move(move)
 
             # Check win condition
-            # elif self.game.won():
-            #     print(f"Algorithm succeeded, solution found with length: {move_count + 1}")
-            #     self.end_board = self.game.board
-            #     self.winning_moves_list.append(move)
-            #     return True
+            elif self.game.won():
+                print(f"Algorithm succeeded, solution found with length: {move_count + 1}")
+                self.end_board = self.game.board
+                self.winning_moves_list.append(move)
+                return True
 
             # Make next move
             elif self.find_solution(move_count):
