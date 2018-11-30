@@ -25,10 +25,11 @@ class Algorithm(object):
         # Update moves and count
         move_list = self.game.find_moves()
         print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
+        #move_list.reverse()
 
         # Check limit
         move_count += 1
-        if move_count == 15:
+        if move_count == 200:
             return False
 
         # Iterate over valid moves
@@ -60,7 +61,7 @@ class Algorithm(object):
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game2.txt")
+    game = RushHour("../../data/Game3.txt")
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)

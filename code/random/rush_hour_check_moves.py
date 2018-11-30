@@ -1,9 +1,7 @@
 from board import Board
 from car import Car
-import random
 import copy
-
-RECURSION_LIMIT = 10
+import random
 
 
 class RushHour(object):
@@ -15,18 +13,11 @@ class RushHour(object):
         """
         Load the board and cars
         """
-        # save filename and load board
-        self.filename = filename
+        # load board
         self.board = self.load_game(filename)
 
         # initialize move_counter
         self.move_counter = 0
-
-        # track recursion depth
-        self.recursion_depth = 0
-        self.recursion_limit = RECURSION_LIMIT
-        self.best_solution = []
-        self.best_number_of_moves = 100000
 
     def load_game(self, filename):
         """
@@ -77,31 +68,23 @@ class RushHour(object):
         return board
 
     def solve(self):
-        # while recursion limit not exceeded
-        while self.recursion_depth < self.recursion_limit:
-            # increment recursion depth
-            self.recursion_depth += 1
-            print(self.recursion_depth)
+        # show board
+        print(f"{self.board}\n")
 
-            # make random moves until game is won
-            while not self.board.won():
-                # execute moves
-                self.board.move_car(random.choice(self.board.find_moves()))
+        moves_list = ['A -2', 'X -1', 'B -2', 'X 1', 'C -1', 'B 1', 'B -1', 'D -1', 'X -2', 'X 2', 'F -2', 'X -2',
+                      'X 3', 'E -1', 'H 2', 'J -1', 'X -2', 'L -1', 'J -1', 'K -1', 'K -1', 'X -1', 'F 1', 'X 1',
+                      'K 2', 'G 1', 'I -2', 'B 1', 'L -2', 'A 1', 'I 1', 'J 1', 'I 1', 'G -1', 'J -1',
+                      'K -3', 'J 2', 'A -1', 'A 1', 'H -2', 'E 3', 'F 3']
 
-            # check if the found solution is the best so far
-            if len(self.board.move_sequence) < self.best_number_of_moves:
-                self.best_solution = copy.copy(self.board.move_sequence)
-                self.best_number_of_moves = len(self.best_solution)
+        # solve game
+        for move in moves_list:
+            self.board.move_car(move)
+            print(f"{self.board}\n")
 
-            # reset board
-            self.board = self.load_game(self.filename)
-
-        print(f"The best solution was: {self.best_solution}\n"
-              f"Number of moves: {len(self.best_solution)}")
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game7.txt")
+    rushhour = RushHour("../../data/Game2.txt")
     rushhour.solve()
 
 
