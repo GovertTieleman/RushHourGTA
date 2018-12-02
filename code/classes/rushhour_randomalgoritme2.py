@@ -76,9 +76,13 @@ class RushHour(object):
         # create list of allowed moves
         self.allowed_moves = []
 
+        self.winning_moves = []
+
+        self.preferred_moves = []
+
         self.no_solution = 0
 
-        self.upper_bound = 200
+        self.upper_bound = 5000
 
     def find_moves(self, board, cars):
         # initialize list of possible moves
@@ -208,8 +212,8 @@ class RushHour(object):
 
         # if red car can reach exit, game is won
         if self.cars["X"].move_valid(distance, 1, self.board):
-            print(f"Congratulations, you won!\n"
-                  f"move history: {self.move_history}")
+            # print(f"Congratulations, you won!\n"
+            #       f"move history: {self.move_history}")
             return True
         else:
             return False
@@ -260,14 +264,28 @@ class RushHour(object):
             print(f"Move {command} is invalid!\n")
             return False
 
+    def cars_blocking(self, board):
+        blocking_cars = 0
+        for i in range(self.cars["X"].x[1] + 1, board.size):
+            if board.coordinates[i, self.cars["X"].y[0]] != "-":
+                blocking_cars += 1
+        return blocking_cars
 
-
+    def more_winnable(self, board, move):
+        blocking_cars_before = self.cars_blocking(board)
+        self.move_car(move)
+        blocking_cars_after = self.cars_blocking(self.board)
+        self.revert_move(move)
+        if blocking_cars_after < blocking_cars_before:
+            return True
+        else:
+            return False
 
     def solve(self, rushhour, no_solution, upper_bound, best_game):
-        print(f"\n\nBest game so far is: {best_game}!\n\n")
+        print(f"\nBest game so far is: {best_game}!\n")
 
         # if it hasnt found a (better) solution 10 times in a row
-        if no_solution == 10:
+        if no_solution == 100:
             if not best_game:
                 print(f"\nNo solution has been found!\n")
                 return False
@@ -276,9 +294,11 @@ class RushHour(object):
                 return True
 
         # reset all variables
-        rushhour = RushHour("../../data/Game4.txt")
+        rushhour = RushHour("../../data/Game5.txt")
         self.archive = [copy.copy(self.board.board_string())]
         self.allowed_moves = []
+        self.winning_moves = []
+        self.preferred_moves = []
         self.move_history = []
 
         print("\nCalling random_solve\n")
@@ -286,12 +306,12 @@ class RushHour(object):
         if not last_game:
             self.no_solution += 1
             print("Calling solve\n")
-            self.solve(rushhour, self.no_solution, self.upper_bound, best_game)
+            return self.solve(rushhour, self.no_solution, self.upper_bound, best_game)
         # if it has found a solution
         else:
             self.upper_bound = len(last_game)
             best_game = last_game
-            self.solve(rushhour, self.no_solution, self.upper_bound, best_game)
+            return self.solve(rushhour, self.no_solution, self.upper_bound, best_game)
 
     def random_solve(self, rushhour, archive, upper_bound):
 
@@ -316,13 +336,7 @@ class RushHour(object):
                 rushhour.move_car(move)
 
                 # if board is not in archive yet
-                in_archive = False
-                for board in archive:
-                    if board == rushhour.board.board_string():
-                        in_archive = True
-
-                if in_archive is False:
-                    # add board to list of allowed moves
+                if rushhour.board.board_string() not in archive:
                     self.allowed_moves.append(move)
 
                 # revert move
@@ -330,7 +344,7 @@ class RushHour(object):
 
             # if there are no more possible moves to make
             if not self.allowed_moves:
-                print("No more moves to make!\n\nReverting move and trying different move...\n\n")
+                print("No more moves to make!\nReverting move and trying different move...\n")
                 # add board to archive
                 archive.append(copy.copy(rushhour.board.board_string()))
                 # revert last move made
@@ -342,29 +356,80 @@ class RushHour(object):
                     # delete last move from move history
                     del self.move_history[-1]
                     # recursively call function again
-                    rushhour.random_solve(rushhour, archive, upper_bound)
+                    print(f"\nNumber of allowed moves:{len(self.allowed_moves)}\n")
+                    return rushhour.random_solve(rushhour, archive, upper_bound)
                     # return False
 
-            # pick random move from move_list
-            random_move = random.choice(self.allowed_moves)
+            # check which allowed moves are winning moves and add these to winning_moves
+            for move in self.allowed_moves:
+                rushhour.move_car(move)
+                if rushhour.won():
+                    self.winning_moves.append(move)
+                rushhour.revert_move(move)
 
-            # print("Random move to make is: "+ random_move)
+            # print(f"\nAllowed moves: {self.allowed_moves}")
+            # print(f"\nWinning moves: {self.winning_moves}")
 
-            # make move and save move to move_history list
-            rushhour.move_car(random_move)
-            self.move_history.append(random_move)
+            if not self.winning_moves:
+                # filter out preferred moves
+                for move in self.allowed_moves:
+                    if self.more_winnable(rushhour.board, move):
+                        self.preferred_moves.append(move)
+
+                # print(f"\nPreferred moves: {self.preferred_moves}\n")
+
+                # if no preferred moves, choose random allowed move
+                if not self.preferred_moves:
+                    # print("\nMaking random move...\n")
+                    random_move = random.choice(self.allowed_moves)
+                    rushhour.move_car(random_move)
+                    self.move_history.append(random_move)
+                else:
+                    # print("\nMaking random preferred move...\n")
+                    random_preferred_move = random.choice(self.preferred_moves)
+                    rushhour.move_car(random_preferred_move)
+                    self.move_history.append(random_preferred_move)
+
+
+
+
+                # print("\nMaking random move...\n")
+                # random_move = random.choice(self.allowed_moves)
+                # print(f"\nRandom move is: {random_move}\n")
+                # rushhour.move_car(random_move)
+                # self.move_history.append(random_move)
+            else:
+                print("\nMaking winning move...\n")
+                winning_move = random.choice(self.winning_moves)
+                print(f"\nWinning move is: {winning_move}\n")
+                rushhour.move_car(winning_move)
+                self.move_history.append(winning_move)
+
+
+            # # pick random move from move_list
+            # random_move = random.choice(self.allowed_moves)
+            #
+            # # print("Random move to make is: "+ random_move)
+            #
+            # # make move and save move to move_history list
+            # rushhour.move_car(random_move)
+            # self.move_history.append(random_move)
 
             # check if game is won
             if rushhour.won() is True:
                 # Stop, return solution!
-                print(f"Game is won! (in {len(self.move_history)} moves)")
+                print(f"Game is won! (in {len(self.move_history)} moves)\n"
+                      f"move history: {self.move_history}")
                 return self.move_history
 
             # save current board to archive
             archive.append(copy.copy(rushhour.board.board_string()))
 
-        # empty list of allowed moves
+        # empty lists of allowed moves and winning moves and preferred moves
         del self.allowed_moves[:]
+        del self.winning_moves[:]
+        del self.preferred_moves[:]
+
 
         # recursively call this function again
         return rushhour.random_solve(rushhour, archive, upper_bound)
@@ -375,9 +440,9 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game4.txt")
+    rushhour = RushHour("../../data/Game5.txt")
     no_solution = 0
-    upper_bound = 200
+    upper_bound = 5000
     best_game = []
 
     rushhour.solve(rushhour, no_solution, upper_bound, best_game)
