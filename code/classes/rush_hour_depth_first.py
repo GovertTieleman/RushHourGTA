@@ -208,20 +208,35 @@ Main file for running and solving the game
 
         penalty = 2
 
-        if direction == 'UP':
-            target_coordinate = self.board.coordinates(coordinate[0], coordinate[1] - 1)
-        elif direction == 'DOWN':
-            target_coordinate = self.board.coordinates(coordinate[0], coordinate[1] + 1)
-        elif direction == 'LEFT':
-            target_coordinate = self.board.coordinates(coordinate[0] - 1, coordinate[1])
-        elif direction == 'RIGHT':
-            target_coordinate = self.board.coordinates(coordinate[0] + 1, coordinate[1])
+        # Check if coordinate exists
+        if self.board.coordinates[coordinate[0], coordinate[0]]:
+            space = self.board.coordinates[coordinate[0], coordinate[0]]
 
-        if target_coordinate == '-':
-            return 0
-        elif target_coordinate.isalpha():
-            count += 1
-            return self.gridlock(count, target_coordinate, direction)
+            # If coordinate is empty, return count
+            if space == '-':
+                return count
+
+            # If coordinate is occupied, increment count
+            elif space.isalpha():
+                count += 1
+
+                # Find coordinate to check next
+
+                # If car is horizontal
+                #     If direction is right, check right
+                #     If direction is left, check left
+                #     Else check left and right
+                # If car is vertical
+                #     If direction is up, check up
+                #     If direction is down, check down
+                #     Else check up and down
+
+                UP = self.board.coordinates[coordinate[0], coordinate[1] - 1]
+                DOWN = self.board.coordinates[coordinate[0], coordinate[1] + 1]
+                LEFT = self.board.coordinates[coordinate[0] - 1, coordinate[1]]
+                RIGHT = self.board.coordinates[coordinate[0] + 1, coordinate[1]]
+
+                return self.gridlock(count, target_coordinate, direction)
         else:
             return count + penalty
 
