@@ -29,7 +29,7 @@ class Algorithm(object):
 
         # Check limit
         move_count += 1
-        if move_count == 200:
+        if move_count == 50:
             return False
 
         # Iterate over valid moves
@@ -58,10 +58,24 @@ class Algorithm(object):
                 self.game.revert_move(move)
         return False
 
+
+# cars blocking on the topright
+check if a
+car is blocking
+if true
+    plus
+    car
+    return check
+    next
+    car
+if false ->
+return gridlock
+count
+
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game3.txt")
+    game = RushHour("../../data/Game4.txt")
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)
