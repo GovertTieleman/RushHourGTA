@@ -19,6 +19,10 @@ Main file for running and solving the game
         # initialize move_counter
         self.move_counter = 0
 
+        # gridlocks
+        self.gridlocks = self.gridlock(0, X, 'HORIZONTAL', X, 1)
+        self.gridlock_size = len(self.gridlocks)
+
     def load_game(self, filename):
         """
     Method for loading the board
@@ -79,30 +83,13 @@ Main file for running and solving the game
                 i = 1
 
                 # iterate over fields on the left side of car
-                while x_left - i > 0:
-                    if self.board.coordinates[(x_left - i), y_car] != '-':
-                        # break if no empty space
-                        break
-                    else:
-                        # append move to moveslist
+                if x_left - i > 0 and self.board.coordinates[(x_left - i), y_car] == '-':
                         self.moveslist.append(f"{car_id} {-i}")
-                        i += 1
-
-                # reset counter
-                i = 1
 
                 # iterate over fields on the right side of car
-                while x_right + i < self.board.size:
-                    if self.board.coordinates[(x_right + i), y_car] != '-':
-                        # break if no empty space
-                        break
-                    else:
-                        # append move to moveslist
+                if x_right + i < self.board.size and self.board.coordinates[(x_right + i), y_car] == '-':
                         self.moveslist.append(f"{car_id} {i}")
-                        i += 1
 
-                # reset counter
-                i = 1
             # check if car is vertical
             if self.cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
@@ -116,31 +103,12 @@ Main file for running and solving the game
                 i = 1
 
                 # iterate over fields on the left side of car
-                while y_top - i > 0:
-                    if self.board.coordinates[x_car, (y_top - i)] != '-':
-                        # break if no empty space
-                        break
-                    else:
-                        # append move to moveslist
+                if y_top - i > 0 and self.board.coordinates[x_car, (y_top - i)] == '-':
                         self.moveslist.append(f"{car_id} {-i}")
-                        i += 1
-
-                # reset counter
-                i = 1
 
                 # iterate over fields on the right side of car
-                while y_bottom + i < self.board.size:
-                    if self.board.coordinates[x_car, (y_bottom + i)] != '-':
-                        # break if no empty space
-                        i = 1
-                        break
-                    else:
-                        # append move to moveslist
+                if y_bottom + i < self.board.size and self.board.coordinates[x_car, (y_bottom + i)] == '-':
                         self.moveslist.append(f"{car_id} {i}")
-                        i += 1
-
-                # reset counter
-                i = 1
 
         return self.moveslist
 
@@ -236,10 +204,31 @@ Main file for running and solving the game
             print(f"Invalid move\n")
             return False
 
+    def gridlock(self, count, coordinate, direction):
+
+        penalty = 2
+
+        if direction == 'UP':
+            target_coordinate = self.board.coordinates(coordinate[0], coordinate[1] - 1)
+        elif direction == 'DOWN':
+            target_coordinate = self.board.coordinates(coordinate[0], coordinate[1] + 1)
+        elif direction == 'LEFT':
+            target_coordinate = self.board.coordinates(coordinate[0] - 1, coordinate[1])
+        elif direction == 'RIGHT':
+            target_coordinate = self.board.coordinates(coordinate[0] + 1, coordinate[1])
+
+        if target_coordinate == '-':
+            return 0
+        elif target_coordinate.isalpha():
+            count += 1
+            return self.gridlock(count, target_coordinate, direction)
+        else:
+            return count + penalty
+
+
     def won(self):
         distance = (self.board.size - self.cars["X"].x[1]) - 1
         if self.cars["X"].move_valid(distance, 1, self.board):
-            print("Congratulations, you won!")
             return True
         else:
             return False
