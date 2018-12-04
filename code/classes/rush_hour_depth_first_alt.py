@@ -64,86 +64,53 @@ Main file for running and solving the game
         # create board class
         self.board = Board(size, coordinates)
 
-    def find_moves(self, board, cars):
+    def find_moves(self):
         # initialize list of possible moves
-        self.movest_list = []
+        self.moveslist = []
 
         # iterate over all car objects
-        for car_id in cars:
+        for car_id in self.cars:
             # check if car is horizontal
-            if cars[car_id].orientation == 'HORIZONTAL':
+            if self.cars[car_id].orientation == 'HORIZONTAL':
                 # get leftmost and rightmost x of car
-                x_left = cars[car_id].x[0]
-                x_right = cars[car_id].x[len(cars[car_id].x) - 1]
+                x_left = self.cars[car_id].x[0]
+                x_right = self.cars[car_id].x[len(self.cars[car_id].x) - 1]
 
                 # get y of car
-                y_car = cars[car_id].y[0]
+                y_car = self.cars[car_id].y[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
-                while x_left - i > 0:
-                    if board.coordinates[(x_left - i), y_car] != '-':
-                        # break if no empty space
-                        break
-                    else:
-                        # append move to movest_list
-                        self.movest_list.append(f"{car_id} {-i}")
-                        i += 1
-
-                # reset counter
-                i = 1
+                if x_left - i > 0 and self.board.coordinates[(x_left - i), y_car] == '-':
+                        self.moveslist.append(f"{car_id} {-i}")
 
                 # iterate over fields on the right side of car
-                while x_right + i < board.size:
-                    if board.coordinates[(x_right + i), y_car] != '-':
-                        # break if no empty space
-                        break
-                    else:
-                        # append move to movest_list
-                        self.movest_list.append(f"{car_id} {i}")
-                        i += 1
+                if x_right + i < self.board.size and self.board.coordinates[(x_right + i), y_car] == '-':
+                        self.moveslist.append(f"{car_id} {i}")
 
             # check if car is vertical
-            if cars[car_id].orientation == 'VERTICAL':
+            if self.cars[car_id].orientation == 'VERTICAL':
                 # get leftmost and rightmost x of car
-                y_top = cars[car_id].y[0]
-                y_bottom = cars[car_id].y[len(cars[car_id].y) - 1]
+                y_top = self.cars[car_id].y[0]
+                y_bottom = self.cars[car_id].y[len(self.cars[car_id].y) - 1]
 
                 # get y of car
-                x_car = cars[car_id].x[0]
+                x_car = self.cars[car_id].x[0]
 
                 # set counter i to 1
                 i = 1
 
                 # iterate over fields on the left side of car
-                while y_top - i > 0:
-                    if board.coordinates[x_car, (y_top - i)] != '-':
-                        # break if no empty space
-                        break
-                    else:
-                        # append move to movest_list
-                        self.movest_list.append(f"{car_id} {-i}")
-                        i += 1
-
-                # reset counter
-                i = 1
+                if y_top - i > 0 and self.board.coordinates[x_car, (y_top - i)] == '-':
+                        self.moveslist.append(f"{car_id} {-i}")
 
                 # iterate over fields on the right side of car
-                while y_bottom + i < board.size:
-                    if board.coordinates[x_car, (y_bottom + i)] != '-':
-                        # break if no empty space
-                        i = 1
-                        break
-                    else:
-                        # append move to movest_list
-                        self.movest_list.append(f"{car_id} {i}")
-                        i += 1
+                if y_bottom + i < self.board.size and self.board.coordinates[x_car, (y_bottom + i)] == '-':
+                        self.moveslist.append(f"{car_id} {i}")
 
-        # print(f"Possible moves: {self.movest_list}")
-
-        return self.movest_list
+        return self.moveslist
 
     def move_car(self, command):
         """
