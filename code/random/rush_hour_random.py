@@ -2,8 +2,9 @@ from board import Board
 from car import Car
 import random
 import copy
+import cProfile
 
-RECURSION_LIMIT = 10
+RECURSION_LIMIT = 100000
 
 
 class RushHour(object):
@@ -101,7 +102,7 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game1.txt")
-    rushhour.solve()
+    rushhour = RushHour("../../data/Game7.txt")
+    cProfile.run('rushhour.solve()')
 
 

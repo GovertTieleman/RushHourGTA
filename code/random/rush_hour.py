@@ -75,7 +75,6 @@ class RushHour(object):
         while not self.board.won():
 
 
-
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game2.txt")
     rushhour.solve()

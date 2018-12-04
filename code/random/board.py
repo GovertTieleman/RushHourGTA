@@ -110,7 +110,7 @@ class Board(object):
 
     def move_car(self, command):
         """
-        Execute a valid move command.
+        Execute a move command.
         """
         # append command to move sequence of board
         self.move_sequence.append(command)
@@ -128,6 +128,54 @@ class Board(object):
             distance = int(move[1:])
         else:
             direction = 1
+            distance = int(move)
+
+        # move car
+        if car.orientation == 'HORIZONTAL':
+            # replace the whole car on the board by empty squares and move car object
+            for i in range(len(car.x)):
+                self.coordinates[car.x[i], car.y[i]] = '-'
+                car.x[i] += distance * direction
+
+            # place the car in its new position on the board
+            for x in car.x:
+                self.coordinates[x, car.y[0]] = car.id
+
+            # return true if move successful
+            return True
+        elif car.orientation == 'VERTICAL':
+            # replace the whole car on the board by empty squares and move car object
+            for i in range(len(car.y)):
+                self.coordinates[car.x[i], car.y[i]] = '-'
+                car.y[i] += distance * direction
+
+            # place the car in its new position on the board
+            for y in car.y:
+                self.coordinates[car.x[0], y] = car.id
+
+            # return true if move successful
+            return True
+
+    def revert_move(self, command):
+        """
+        Revert a move command.
+        """
+        # remove last command from move_sequence
+        del self.move_sequence[-1]
+
+        # split command for use
+        command = command.split(' ')
+
+        # get car
+        car = self.cars[command[0]]
+
+        # get direction and distance
+        move = command[1]
+        if move[0] == '-':
+            direction = 1
+            distance = int(move[1:])
+        else:
+            direction = -1
             distance = int(move)
 
         # move car

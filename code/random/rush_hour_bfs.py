@@ -1,7 +1,7 @@
 from board import Board
 from car import Car
 import copy
-import random
+import cProfile
 
 
 class RushHour(object):
@@ -68,73 +68,60 @@ class RushHour(object):
         return board
 
     def solve(self):
-        # show starting board
-        print(f"{self.board}\n")
+        # keep list of visited boards
+        visited = set()
 
-        # create queue of boards
-        boards = [copy.deepcopy(self.board)]
+        # set max_depth
+        max_depth = 100
 
-        # create exists boolean to check if board in queue
-        exists = False
-
-        # initiate moves_tried
-        moves_tried = 0
+        # create queue of boards and append the starting board
+        queue = list()
+        queue.append(self.board)
 
         # iterate over boards in queue
-        for board in boards:
+        while len(queue) != 0:
+            # get current board
+            board = queue.pop(0)
+
             # get depth
             depth = len(board.move_sequence)
 
             # show user which board is being considered
             print(f"currently working on this board: \n{board}\n"
                   f"depth: {depth}\n"
-                  f"size of queue: {len(boards)}\n"
-                  f"moves tried: {moves_tried}")
+                  f"size of queue: {len(queue)}\n"
+                  f"size of archive: {len(visited)}\n")
 
-            # make copy of current board
-            current_board = copy.deepcopy(board)
+            if depth >= max_depth:
+                print(f"max_depth exceeded\n")
+                break
 
-            # get moves for board
-            moves_list = current_board.find_moves()
+            if board.board_string() in visited:
+                print(f"board visited\n")
+                continue
+            else:
+                visited.add(board.board_string())
 
-            # iterate over moves in list
-            for move in moves_list:
-                # increment moves_tried
-                moves_tried += 1
+            if board.won():
+                break
+            else:
+                # get moves for board
+                moves_list = board.find_moves()
 
-                # execute move
-                board.move_car(move)
+                # iterate over moves in list
+                for move in moves_list:
+                    # execute move
+                    board.move_car(move)
 
-                # check for win
-                if board.won():
-                    return 0
+                    # extend queue
+                    queue.append(copy.deepcopy(board))
 
-                # check if new board
-                new_candidate = board.board_string
-                for existing in boards:
-                    # prune queue
-                    if len(existing.move_sequence) < depth:
-                        boards.remove(existing)
-
-                    # if new board already exists in list
-                    if new_candidate == existing.board_string:
-                        # set exists to True and break off search
-                        exists = True
-                        break
-
-                    # set exists to false if not found
-                    exists = False
-
-                # if new board, add to queue
-                if not exists:
-                    boards.append(copy.deepcopy(board))
-
-                # reset board
-                board = copy.deepcopy(current_board)
+                    # revert move
+                    board.revert_move(move)
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/TestGameSimple1.txt")
-    rushhour.solve()
+    rushhour = RushHour("../../data/Game6.txt")
+    cProfile.run('rushhour.solve()')
 
 

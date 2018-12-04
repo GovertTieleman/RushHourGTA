@@ -58,6 +58,7 @@ class Algorithm(object):
                 self.game.revert_move(move)
         return False
 
+
 if __name__ == "__main__":
 
     # Initialize Algorithm
