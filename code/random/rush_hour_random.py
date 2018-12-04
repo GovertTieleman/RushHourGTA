@@ -102,7 +102,7 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game6.txt")
+    rushhour = RushHour("../../data/Game7.txt")
     cProfile.run('rushhour.solve()')
 
 
