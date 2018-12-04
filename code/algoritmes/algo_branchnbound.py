@@ -29,7 +29,7 @@ class Algorithm(object):
 
         # Check limit
         move_count += 1
-        if move_count == 15:
+        if move_count == 30:
             return False
 
         # Iterate over valid moves

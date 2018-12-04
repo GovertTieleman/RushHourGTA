@@ -29,7 +29,7 @@ class Algorithm(object):
 
         # Check limit
         move_count += 1
-        if move_count == 33:
+        if move_count == 28:
             return False
 
         # Iterate over valid moves
@@ -61,7 +61,7 @@ class Algorithm(object):
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game1.txt")
+    game = RushHour("../../data/Game2.txt")
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)
