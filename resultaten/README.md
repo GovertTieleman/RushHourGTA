@@ -9,8 +9,12 @@ Er is data verzameld met behulp van 3 verschillende algoritmes:
 <details>
   <summary>fully random</summary>
   <p>Content 1 Content 1 Content 1 Content 1 Content 1</p>
-  <summary>branch and bound</summary>
+</details>
+<details>
+<summary>branch and bound</summary>
   <p>Content 1 Content 1 Content 1 Content 1 Content 1</p>
-  <summary>breadth first</summary>
+</details>  
+<details>  
+<summary>breadth first</summary>
   <p>Content 1 Content 1 Content 1 Content 1 Content 1</p>
 </details>
