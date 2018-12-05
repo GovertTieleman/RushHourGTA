@@ -14,7 +14,7 @@ Er is data verzameld met behulp van 3 verschillende algoritmes:
 <details>
 <summary>branch and bound</summary>
   <p>
-  
+    
   </p>
 </details>  
 <details>  
@@ -28,4 +28,5 @@ Er is data verzameld met behulp van 3 verschillende algoritmes:
 ## Hoe bepalen we wat de kwaliteit is van een oplossing? ##
 De meest voor de hand liggende factor waarop een oplossing kan worden beoordeeld is het aantal zetten. Hoe minder zetten er worden gedaan, hoe beter de oplossing. Als dit als de enige belangrijke factor wordt beschouwd, zou een breadth first algoritme in theorie ideaal zijn, omdat daarmee altijd de best haalbare oplossing gegarandeerd wordt. Het blijkt echter dat de state space bij de moeilijkere problemen dusdanig groot wordt, dat zelfs op een computer met een redelijk grote hoeveelheid werkgeheugen(16 GB) het algoritme vastloopt. 
 
- 
+Er is dus behoefte aan een andere parameter om de kwaliteit te bepalen voor borden die te moeilijk zijn voor een conventioneel breadth first algoritme. Er is bijgehouden wat de runtime en de grootte van het archief waren bij zowel breadth first als branch and bound. Bij de random functie is de runtime en de best gevonden oplossing bijgehouden.  
+
