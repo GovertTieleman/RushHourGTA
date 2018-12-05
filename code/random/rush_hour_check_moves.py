@@ -82,7 +82,6 @@ class RushHour(object):
             print(f"{self.board}\n")
 
 
-
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game2.txt")
     rushhour.solve()

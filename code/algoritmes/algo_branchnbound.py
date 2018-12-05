@@ -1,8 +1,11 @@
-# Algoritme1
+import cProfile
 import sys
 sys.path.insert(0, '../')
 
 from classes.rush_hour_depth_first import RushHour
+
+UPPER_BOUND = 33
+
 
 class Algorithm(object):
     """
@@ -14,7 +17,6 @@ class Algorithm(object):
         self.archive = {}
         self.winning_moves_list = []
         self.end_board = ""
-        self.bound = 30
 
     # Recursive function:
     def find_solution(self, move_count):
@@ -26,11 +28,10 @@ class Algorithm(object):
         # Update moves and count
         move_list = self.game.find_moves(self.game.board, self.game.cars)
         print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
-        #move_list.reverse()
 
         # Check limit
         move_count += 1
-        if move_count == self.bound + 1:
+        if move_count == UPPER_BOUND + 1:
             return False
 
         # Iterate over valid moves
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)
-    solution.find_solution(count)
+    cProfile.run(solution.find_solution(count))
 
     # Result
     if solution.end_board:
