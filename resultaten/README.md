@@ -5,7 +5,11 @@ Hier zal de verzamelde data worden besproken en wordt er een poging gedaan de da
 * Wat maakt bepaalde borden moeilijker dan andere borden?
 
 Er is data verzameld met behulp van 3 verschillende algoritmes: 
-* fully random
+
+<details>
+  <summary>fully random</summary>
+  <p>Content 1 Content 1 Content 1 Content 1 Content 1</p>
+</details>
+* 
 * branch and bound
 * breadth first
-
