@@ -14,6 +14,7 @@ class Algorithm(object):
         self.archive = {}
         self.winning_moves_list = []
         self.end_board = ""
+        self.bound = 30
 
     # Recursive function:
     def find_solution(self, move_count):
@@ -29,7 +30,7 @@ class Algorithm(object):
 
         # Check limit
         move_count += 1
-        if move_count == 30:
+        if move_count == self.bound + 1:
             return False
 
         # Iterate over valid moves
@@ -43,7 +44,7 @@ class Algorithm(object):
 
             # Check win condition
             elif self.game.won():
-                print(f"Algorithm succeeded, solution found with length: {move_count + 1}")
+                print(f"Algorithm succeeded, solution found with length: {move_count}")
                 self.end_board = self.game.board
                 self.winning_moves_list.append(move)
                 return True
