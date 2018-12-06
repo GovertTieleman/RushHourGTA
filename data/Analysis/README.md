@@ -30,4 +30,4 @@ Voor het benaderen van de state space hebben wij het aantal mogelijke opstelling
 De effectieve state space hebben we berekend door het Depth First algoritme te runnen zonder win conditie. Deze heeft alle bereikbare opstellingen opgeslagen in het archief, de grootte van het archief is het cijfer dat is weergegeven in de tabel.
 
 
-![Tabel](Schermafbeelding 2018-12-06 om 15.10.04.png?raw=true "Tabel")
+![Tabel](tabel.png?raw=true "Tabel")
