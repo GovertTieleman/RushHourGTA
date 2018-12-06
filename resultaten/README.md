@@ -8,7 +8,7 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
 <details>
   <summary>fully random</summary>
   <p> 
-    Dit algoritme bereikt een oplossing door het maken van willekeurige zetten die worden gekozen uit een lijst van mogelijke zetten. Er     zijn data samples verzameld van 100.000 oplossingen voor elk spel behalve spel 7. Bij spel 7 liep het algoritme vast binnen een paar     honderd oplossingen, om deze reden is ervoor gekozen om 10 keer een sample van 100 oplossingen te nemen en daaruit de beste             oplossing te kiezen.
+    Dit algoritme bereikt een oplossing door het maken van willekeurige zetten die worden gekozen uit een lijst van mogelijke zetten. Er     zijn data samples verzameld van 100.000 oplossingen voor elk spel behalve spel 7. Bij spel 7 was het algoritme te traag om een       sample van 100.000 binnen een redelijke tijd te bemachtigen. Om deze reden is ervoor gekozen om hier slechts 10.000 iteraties van te doen.
   </p>
 </details>
 <details>
