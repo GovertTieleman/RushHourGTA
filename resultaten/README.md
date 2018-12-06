@@ -28,14 +28,13 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
 ## Hoe kan de kwaliteit van de verschillende oplossingen/algoritmes worden beoordeeld? ##
 De meest voor de hand liggende factor waarop een oplossing kan worden beoordeeld is het aantal zetten: hoe minder zetten er worden gedaan, hoe beter de oplossing. Hiervoor is het uiteraard wel nodig dat er op z'n minst een oplossing wordt gevonden. Daarnaast is het een pluspunt als het algoritme snel tot een oplossing komt. 
 
-Een andere factor om mee te nemen is hoeveel informatie er nodig is om een oplossing te kunnen vinden. Bij branch and bound werd in de meeste gevallen sneller een oplossing gevonden dan bij breadth first search, maar alleen nadat de optimale hoeveelheid zetten al door breadth first was gevonden, en ingevoerd als upper bound in branch and bound.
+Een andere factor om mee te nemen is hoeveel informatie er vooraf nodig is om een oplossing te kunnen vinden. Bij branch and bound werd in de meeste gevallen sneller een oplossing gevonden dan bij breadth first search, maar alleen nadat de optimale hoeveelheid zetten al door breadth first was gevonden, en ingevoerd als upper bound in branch and bound.
 
-De kwaliteit van Aangezien een breadth first algoritme de beste oplossing garandeert, isHet blijkt echter dat de state space bij de moeilijkere problemen dusdanig groot wordt, dat het algoritme zelfs op een computer met een redelijk grote hoeveelheid werkgeheugen(16 GB) niet in staat is om een oplossing te vinden.
+Aangezien een breadth first algoritme garandeert dat de gevonden oplossing ideaal is, lijkt dit de beste kandidaat voor elk bord. Het blijkt echter dat de state space bij de moeilijkere problemen dusdanig groot wordt, dat het algoritme zelfs op een computer met een redelijk grote hoeveelheid werkgeheugen(16 GB) niet in staat is om een oplossing te vinden. Hetzelfde geldt voor de branch and bound.
 
-Er is dus behoefte aan een andere parameter om de kwaliteit te bepalen voor borden die te moeilijk zijn voor een conventioneel breadth first algoritme. Er is bijgehouden wat de runtime en de grootte van het archief waren bij zowel breadth first als branch and bound. Bij de random functie is de runtime en de best gevonden oplossing bijgehouden.  
+Er is dus behoefte aan een ander algoritme om oplossingen te vinden voor de borden die te moeilijk zijn voor de breadth first en branch and bound algoritmes. Hierbij is tijd een belangrijke factor. Het genereren van een sample van 100.000 oplossingen duurde bij veel borden meer dan 15 uur. 
 
-## Hoe kan de kwaliteit van de verschillende algoritmes worden beoordeeld? ##
-
+Al met al kunnen we zeggen dat breadth first voor de eerste 4 borden duidelijk het best was. Er werd binnen een relatief korte tijd een oplossing gevonden en er was geen extra informatie nodig om dit mogelijk te maken. Branch and bound was iets sneller dan breadth first, maar kan dit alleen klaarspelen wanneer de ideale oplossing al bekend is. Voor borden 5 t/m 7 was random het best geteste algoritme, aangezien dit het enige algoritme was dat een oplossing vond.
 
 ## Wat maakt bepaalde borden moeilijker dan andere borden? ##
 
