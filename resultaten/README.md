@@ -4,7 +4,7 @@ Hier zal de verzamelde data worden besproken en wordt er een poging gedaan de da
 * Hoe kan de kwaliteit van de verschillende oplossingen worden beoordeeld?
 * Wat maakt bepaalde borden moeilijker dan andere borden?
 
-Er is data verzameld met behulp van 3 verschillende algoritmes: 
+Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde computer werden uitgevoerd: 
 <details>
   <summary>fully random</summary>
   <p> 
