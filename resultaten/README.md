@@ -5,27 +5,20 @@ Hier zal de verzamelde data worden besproken en wordt er een poging gedaan de da
 * Wat maakt bepaalde borden moeilijker dan andere borden?
 
 Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde computer werden uitgevoerd: 
-<details>
-  <summary>fully random</summary>
-  <p> 
+
+### fully random ###
    Er zijn data samples verzameld van 100.000 oplossingen voor elk bord behalve nummer 7. Hierbij was het algoritme te traag om een        sample van 100.000 binnen een redelijke tijd te bemachtigen, en dus bestaat de sample hier uit slechts 10.000 oplossingen.
    ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/Random%20solutions/Random%20table.png)
-  </p>
-</details>
-<details>  
-<summary>breadth first search</summary>
-  <p>
+
+### breadth first search ###
+  
     Het breadth first algoritme was in staat om oplossingen te vinden voor borden 1 t/m 4.
     ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BFS%20solutions/BFS%20table.png?)
-  </p>
-</details>
-<details>
-<summary>branch and bound</summary>
-  <p>
+### branch and bound ###
+  
     Het branch and bound algoritme vond oplossingen voor de borden 1 t/m 4 met behulp van de upper bound die werd gevonden met breadth first search.
     ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BranchnBound%20solutions/BnB%20table.png)
-  </p>
-</details>  
+  
 
 ## Hoe kan de kwaliteit van de verschillende oplossingen/algoritmes worden beoordeeld? ##
 De meest voor de hand liggende factor waarop een oplossing kan worden beoordeeld is het aantal zetten: hoe minder zetten er worden gedaan, hoe beter de oplossing. Hiervoor is het uiteraard wel nodig dat er op z'n minst een oplossing wordt gevonden. Daarnaast is het een pluspunt als het algoritme snel tot een oplossing komt. 
