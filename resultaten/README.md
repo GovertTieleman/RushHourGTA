@@ -40,5 +40,3 @@ De volgende eigenschappen kunnen de moeilijkheidsgraad van een bord beïnvloeden
 * de grootte van het bord
 * het aantal auto's op het bord
 * minimum aantal zetten dat benodigd is om een oplossing te vinden
-* 
-
