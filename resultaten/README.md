@@ -9,7 +9,7 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
   <summary>fully random</summary>
   <p> 
    Er zijn data samples verzameld van 100.000 oplossingen voor elk bord behalve nummer 7. Hierbij was het algoritme te traag om een        sample van 100.000 binnen een redelijke tijd te bemachtigen, en dus bestaat de sample hier uit slechts 10.000 oplossingen.
-    ![alt text](https://github.com/ertzor/RushHourGTA/blob/master/resultaten/BFS%20solutions/BFS%20table.png)
+    ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BFS%20solutions/BFS%20table.png)
   </p>
 </details>
 <details>  
