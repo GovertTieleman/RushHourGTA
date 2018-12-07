@@ -11,19 +11,19 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
    Er zijn data samples verzameld van 100.000 oplossingen voor elk bord behalve nummer 7. Hierbij was het algoritme te traag om een        sample van 100.000 binnen een redelijke tijd te bemachtigen, en dus bestaat de sample hier uit slechts 10.000 oplossingen.
   </p>
 </details>
-<details>
-<summary>branch and bound</summary>
-  <p>
-    
-  </p>
-</details>  
 <details>  
-<summary>breadth first</summary>
+<summary>breadth first search</summary>
   <p>
     Het breadth first algoritme was in staat om oplossingen te vinden voor borden 1 t/m 4.
     
   </p>
 </details>
+<details>
+<summary>branch and bound</summary>
+  <p>
+    Het branch and bound algoritme vond oplossingen voor de borden 1 t/m 4 met behulp van de upper bound die werd gevonden met breadth first search.
+  </p>
+</details>  
 
 ## Hoe kan de kwaliteit van de verschillende oplossingen/algoritmes worden beoordeeld? ##
 De meest voor de hand liggende factor waarop een oplossing kan worden beoordeeld is het aantal zetten: hoe minder zetten er worden gedaan, hoe beter de oplossing. Hiervoor is het uiteraard wel nodig dat er op z'n minst een oplossing wordt gevonden. Daarnaast is het een pluspunt als het algoritme snel tot een oplossing komt. 
