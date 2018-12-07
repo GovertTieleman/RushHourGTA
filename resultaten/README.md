@@ -12,14 +12,14 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
    ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/Random%20solutions/Random%20table.png)
 
 ### breadth first search ###
-    Het breadth first algoritme was in staat om oplossingen te vinden voor borden 1 t/m 4.
+   Het breadth first algoritme was in staat om oplossingen te vinden voor borden 1 t/m 4.
     
-    ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BFS%20solutions/BFS%20table.png?)
+   ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BFS%20solutions/BFS%20table.png?)
     
 ### branch and bound ###
-    Het branch and bound algoritme vond oplossingen voor de borden 1 t/m 4 met behulp van de upper bound die werd gevonden met breadth       first search.
+   Het branch and bound algoritme vond oplossingen voor de borden 1 t/m 4 met behulp van de upper bound die werd gevonden met breadth      first search.
     
-    ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BranchnBound%20solutions/BnB%20table.png)
+   ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BranchnBound%20solutions/BnB%20table.png)
   
 
 ## Hoe kan de kwaliteit van de verschillende oplossingen/algoritmes worden beoordeeld? ##
