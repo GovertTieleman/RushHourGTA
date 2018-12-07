@@ -71,19 +71,17 @@ class RushHour(object):
         # show board
         print(f"{self.board}\n")
 
-        moves_list = ['A -2', 'X -1', 'B -2', 'X 1', 'C -1', 'B 1', 'B -1', 'D -1', 'X -2', 'X 2', 'F -2', 'X -2',
-                      'X 3', 'E -1', 'H 2', 'J -1', 'X -2', 'L -1', 'J -1', 'K -1', 'K -1', 'X -1', 'F 1', 'X 1',
-                      'K 2', 'G 1', 'I -2', 'B 1', 'L -2', 'A 1', 'I 1', 'J 1', 'I 1', 'G -1', 'J -1',
-                      'K -3', 'J 2', 'A -1', 'A 1', 'H -2', 'E 3', 'F 3']
+        moves_list = ['Y -1', 'Q 2', 'Y 1', 'N -1', 'T -2', 'o -1', 'Q -2', 'E -1', 'O 1', 'e 1', 'T -1', 'l -1', 'T 1', 'I 1', 'N -1', 'S -2']
 
         # solve game
         for move in moves_list:
+            print(move)
             self.board.move_car(move)
             print(f"{self.board}\n")
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game2.txt")
+    rushhour = RushHour("../../data/Game7.txt")
     rushhour.solve()
 
 

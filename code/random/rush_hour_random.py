@@ -4,7 +4,7 @@ import random
 import copy
 import cProfile
 
-RECURSION_LIMIT = 100000
+RECURSION_LIMIT = 10000
 
 
 class RushHour(object):
