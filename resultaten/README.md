@@ -44,10 +44,13 @@ De volgende eigenschappen kunnen de moeilijkheidsgraad van een bord beïnvloeden
 
 ## Visualisatie van de gevonden oplossingen (voor level 1, 2 en 3)
 Level 1:
+
 ![Level 1](https://github.com/ertzor/RushHourGTA/blob/master/resultaten/L1%20gif.gif)
 
 Level 2:
+
 ![Level 2](https://github.com/ertzor/RushHourGTA/blob/master/resultaten/L2%20gif.gif)
 
 Level 3:
+
 ![Level 3](https://github.com/ertzor/RushHourGTA/blob/master/resultaten/L3%20gif.gif)
