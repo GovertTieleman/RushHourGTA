@@ -9,19 +9,21 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
   <summary>fully random</summary>
   <p> 
    Er zijn data samples verzameld van 100.000 oplossingen voor elk bord behalve nummer 7. Hierbij was het algoritme te traag om een        sample van 100.000 binnen een redelijke tijd te bemachtigen, en dus bestaat de sample hier uit slechts 10.000 oplossingen.
+    ![Alt text](../BFS_solutions/BFS_table.png?raw=true "Portrait")
   </p>
 </details>
 <details>  
 <summary>breadth first search</summary>
   <p>
     Het breadth first algoritme was in staat om oplossingen te vinden voor borden 1 t/m 4.
-    
+    ![Alt text](/Screenshot_20181123-143340.jpg?raw=true "Portrait")
   </p>
 </details>
 <details>
 <summary>branch and bound</summary>
   <p>
     Het branch and bound algoritme vond oplossingen voor de borden 1 t/m 4 met behulp van de upper bound die werd gevonden met breadth first search.
+    ![Alt text](/Screenshot_20181123-143340.jpg?raw=true "Portrait")
   </p>
 </details>  
 
