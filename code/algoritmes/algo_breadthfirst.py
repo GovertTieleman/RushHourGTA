@@ -2,23 +2,76 @@ import cProfile
 import sys
 sys.path.insert(0, '../')
 
-from random.rush_hour_bfs.py import RushHour
+from classes.board import Board
+from classes.car import Car
+import copy
+import cProfile
 
 
-class Algorithm(object):
+class RushHour(object):
     """
-    Main class for running and solving the game
+    Main file for running and solving the game
     """
 
-    def __init__(self, game):
-        self.game = game
-        self.archive = {}
-        self.winning_moves_list = []
-        self.end_board = ""
+    def __init__(self, filename):
+        """
+        Load the board and cars
+        """
+        # load board
+        self.board = self.load_game(filename)
 
-    # Recursive function:
-    def find_solution(self):
+        # initialize move_counter
+        self.move_counter = 0
 
+    def load_game(self, filename):
+        """
+        Method for loading the board
+        :param filename:
+        :return:
+        """
+        # establish dictionary of coordinates and cars
+        coordinates = {}
+        cars = {}
+
+        # open file
+        with open(filename, "r") as f:
+            # read lines and coordinates, starting with x and y at 1
+            lines = f.readlines()
+            size = len(lines[0].strip())
+            x = 1
+            y = 1
+            # iterate over characters, creating the board and cars
+            for line in lines:
+                for char in line.strip():
+                    coordinates[x, y] = char
+                    if char.isalpha():
+                        if char in cars:
+                            cars[char].x.append(x)
+                            cars[char].y.append(y)
+                        else:
+                            cars[char] = Car(char, x, y, '')
+                    x += 1
+                x = 1
+                y += 1
+
+        # set car orientation
+        for car in cars:
+            if cars[car].x[0] - cars[car].x[1] == 0:
+                cars[car].orientation = 'VERTICAL'
+            else:
+                cars[car].orientation = 'HORIZONTAL'
+
+        # create starting instance of board
+        board = Board(size, coordinates, [])
+
+        # add cars to board
+        for car in cars:
+            board.add_car(cars[car])
+
+        # return board
+        return board
+
+    def solve(self):
         # keep list of visited boards
         visited = set()
 
@@ -72,17 +125,7 @@ class Algorithm(object):
 
 
 if __name__ == "__main__":
-    # Initialize Algorithm
-    game = RushHour("../../data/Game2.txt")
-    solution = Algorithm(game)
-    count = 0
-    print(solution.game.board)
-    cProfile.run(solution.find_solution(count))
+    rushhour = RushHour("../../data/Game3.txt")
+    cProfile.run('rushhour.solve()')
 
-    # Result
-    if solution.end_board:
-        solution.winning_moves_list.reverse()
-        print("Solution:", ", ".join(solution.winning_moves_list), ", X -> #" f"\nFinal board:\n{solution.end_board}")
-    else:
-        print("No solution found")
-    print(f"Archive size: {len(solution.archive)}\n")
+

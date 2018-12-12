@@ -68,7 +68,7 @@ class RushHour(object):
                 self.cars[car].orientation = 'HORIZONTAL'
 
         # create board class
-        self.board = Board(size, coordinates)
+        self.board = Board(size, coordinates, [])
 
         # create archive
         self.archive = [copy.copy(self.board.board_string())]
@@ -294,7 +294,7 @@ class RushHour(object):
                 return True
 
         # reset all variables
-        rushhour = RushHour("../../data/Game5.txt")
+        rushhour = RushHour("../../data/Game2.txt")
         self.archive = [copy.copy(self.board.board_string())]
         self.allowed_moves = []
         self.winning_moves = []
@@ -440,7 +440,7 @@ class RushHour(object):
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game5.txt")
+    rushhour = RushHour("../../data/Game2.txt")
     no_solution = 0
     upper_bound = 5000
     best_game = []

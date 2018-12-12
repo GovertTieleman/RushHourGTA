@@ -37,7 +37,7 @@ Main file for running and solving the game
         with open(filename, "r") as f:
             # read lines and coordinates, starting with x and y at 1
             lines = f.readlines()
-            size = len(lines[0])
+            size = len(lines[0].strip())
             x = 1
             y = 1
             # iterate over characters, creating the board and cars

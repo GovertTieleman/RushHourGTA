@@ -63,7 +63,7 @@ class Algorithm(object):
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game3.txt")
+    game = RushHour("../../data/Game2.txt")
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)
