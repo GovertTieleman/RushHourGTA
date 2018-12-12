@@ -4,7 +4,7 @@ sys.path.insert(0, '../')
 
 from classes.rush_hour_depth_first import RushHour
 
-UPPER_BOUND = 50
+UPPER_BOUND = 20
 
 
 class Algorithm(object):
@@ -63,7 +63,7 @@ class Algorithm(object):
 if __name__ == "__main__":
 
     # Initialize Algorithm
-    game = RushHour("../../data/Game5.txt")
+    game = RushHour("../../data/Game3.txt")
     solution = Algorithm(game)
     count = 0
     print(solution.game.board)

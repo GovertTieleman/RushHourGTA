@@ -1,5 +1,9 @@
-from board import Board
-from car import Car
+import cProfile
+import sys
+sys.path.insert(0, '../')
+
+from classes.board import Board
+from classes.car import Car
 import random
 import copy
 import cProfile

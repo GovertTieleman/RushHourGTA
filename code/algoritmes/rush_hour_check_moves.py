@@ -1,7 +1,11 @@
-from board import Board
-from car import Car
-import copy
 import cProfile
+import sys
+sys.path.insert(0, '../')
+
+from classes.board import Board
+from classes.car import Car
+import copy
+import random
 
 
 class RushHour(object):
@@ -68,60 +72,20 @@ class RushHour(object):
         return board
 
     def solve(self):
-        # keep list of visited boards
-        visited = set()
+        # show board
+        print(f"{self.board}\n")
 
-        # set max_depth
-        max_depth = 100
+        moves_list = ['Y -1', 'Q 2', 'Y 1', 'N -1', 'T -2', 'o -1', 'Q -2', 'E -1', 'O 1', 'e 1', 'T -1', 'l -1', 'T 1', 'I 1', 'N -1', 'S -2']
 
-        # create queue of boards and append the starting board
-        queue = list()
-        queue.append(self.board)
-
-        # iterate over boards in queue
-        while len(queue) != 0:
-            # get current board
-            board = queue.pop(0)
-
-            # get depth
-            depth = len(board.move_sequence)
-
-            # show user which board is being considered
-            print(f"currently working on this board: \n{board}\n"
-                  f"depth: {depth}\n"
-                  f"size of queue: {len(queue)}\n"
-                  f"size of archive: {len(visited)}\n")
-
-            if depth >= max_depth:
-                print(f"max_depth exceeded\n")
-                break
-
-            if board.board_string() in visited:
-                print(f"board visited\n")
-                continue
-            else:
-                visited.add(board.board_string())
-
-            if board.won():
-                break
-            else:
-                # get moves for board
-                moves_list = board.find_moves()
-
-                # iterate over moves in list
-                for move in moves_list:
-                    # execute move
-                    board.move_car(move)
-
-                    # extend queue
-                    queue.append(copy.deepcopy(board))
-
-                    # revert move
-                    board.revert_move(move)
+        # solve game
+        for move in moves_list:
+            print(move)
+            self.board.move_car(move)
+            print(f"{self.board}\n")
 
 
 if __name__ == "__main__":
-    rushhour = RushHour("../../data/Game6.txt")
-    cProfile.run('rushhour.solve()')
+    rushhour = RushHour("../../data/Game7.txt")
+    rushhour.solve()
 
 
