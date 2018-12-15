@@ -1,4 +1,3 @@
-
 A-----BCCCDD
 A----EB---FG
 HHHIIEJKK-FG
