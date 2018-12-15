@@ -17,6 +17,7 @@ class Board(object):
         # sequence and number of moves
         self.move_sequence = move_sequence
 
+
     def add_car(self, car):
         """
         Add car objects to board instance.
@@ -107,6 +108,16 @@ class Board(object):
                         i += 1
 
         return moves_list
+
+    def more_winnable(self, board, command):
+        blocking_cars_before = board.cars_blocking(board)
+        board.move_car(command)
+        blocking_cars_after = board.cars_blocking(board)
+        board.revert_move(command)
+        if blocking_cars_after < blocking_cars_before:
+            return True
+        else:
+            return False
 
     def move_car(self, command):
         """
@@ -203,6 +214,13 @@ class Board(object):
 
             # return true if move successful
             return True
+
+    def cars_blocking(self, board):
+        blocking_cars = 0
+        for i in range(board.cars["X"].x[1] + 1, board.size):
+            if board.coordinates[i, board.cars["X"].y[0]] != "-":
+                blocking_cars += 1
+        return blocking_cars
 
     def won(self):
         """
