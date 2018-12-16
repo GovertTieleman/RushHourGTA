@@ -275,11 +275,30 @@ Main file for running and solving the game
     #
 
     def won(self):
-        distance = (self.board.size - self.cars["X"].x[1]) - 1
-        if self.cars["X"].move_valid(distance, 1, self.board):
-            return True
-        else:
-            return False
+        """
+        Check if the game can be won in 1 move
+        """
+        # get red car
+        red_car = self.cars['X']
+
+        # get (rightmost)x and y for red_car
+        x_red = red_car.x[1]
+        y_red = red_car.y[0]
+
+        # get distance to exit
+        distance_to_exit = self.board.size - x_red
+
+        # check if free path to exit exists
+        for i in range(distance_to_exit):
+            if self.board.coordinates[(x_red + i + 1), y_red] != '-':
+                # return false if no path to exit
+                return False
+
+        # return True if path exists
+        print(f"Game solved in {len(self.move_sequence)} moves.\nThe final board: \n{self} "
+              f"The winning move sequence was: \n{self.move_sequence}")
+        return True
+
 
     def play(self):
         # Welcome player into game

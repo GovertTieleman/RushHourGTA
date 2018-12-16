@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '../')
+
 from board import Board
 from car import Car
 
@@ -56,7 +59,7 @@ class RushHour(object):
                 self.cars[car].orientation = 'HORIZONTAL'
 
         # create board class
-        self.board = Board(size, coordinates)
+        self.board = Board(size, coordinates, [])
 
     def find_moves(self, board, cars):
         # initialize list of possible moves

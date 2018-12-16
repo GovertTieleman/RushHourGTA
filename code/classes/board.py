@@ -1,3 +1,5 @@
+from classes.car import Car
+
 class Board(object):
     """
     Representation of the board in Rush Hour.
@@ -16,6 +18,56 @@ class Board(object):
 
         # sequence and number of moves
         self.move_sequence = move_sequence
+
+    def load_game(self, filename):
+        """
+        Method for loading the board
+        :param filename:
+        :return:
+        """
+        # establish dictionary of coordinates
+        coordinates = {}
+
+        # establish dictionary of cars
+        cars = {}
+
+        # open file
+        with open(filename, "r") as f:
+            # read lines and coordinates, starting with x and y at 1
+            lines = f.readlines()
+            size = len(lines[0].strip())
+            x = 1
+            y = 1
+            # iterate over characters, creating the board and cars
+            for line in lines:
+                for char in line.strip():
+                    coordinates[x, y] = char
+                    if char.isalpha():
+                        if char in cars:
+                            cars[char].x.append(x)
+                            cars[char].y.append(y)
+                        else:
+                            cars[char] = Car(char, x, y, '')
+                    x += 1
+                x = 1
+                y += 1
+
+        # set car orientation
+        for car in cars:
+            if cars[car].x[0] - cars[car].x[1] == 0:
+                cars[car].orientation = 'VERTICAL'
+            else:
+                cars[car].orientation = 'HORIZONTAL'
+
+        # create board class
+        board = Board(size, coordinates, [])
+
+        # add cars to board
+        for car in cars:
+            board.add_car(cars[car])
+
+        # return board
+        return board
 
 
     def add_car(self, car):

@@ -2,18 +2,24 @@ import cProfile
 import sys
 sys.path.insert(0, '../')
 
-from classes.rush_hour_depth_first import RushHour
+# from classes.rush_hour_depth_first import RushHour
+from classes.board import Board
+from classes.car import Car
 
 UPPER_BOUND = 20
 
 
-class Algorithm(object):
+class BnB(object):
     """
     Main class for running and solving the game
     """
 
-    def __init__(self, game):
-        self.game = game
+    def __init__(self, filename):
+        # self.game = game
+
+        # load board
+        self.board = Board.load_game(self, filename)
+
         self.archive = {}
         self.winning_moves_list = []
         self.end_board = ""
@@ -22,11 +28,11 @@ class Algorithm(object):
     def find_solution(self, move_count):
 
         # Check and update archive
-        current_board = self.game.board.board_string()
+        current_board = self.board.board_string()
         self.archive[current_board] = move_count
 
         # Update moves and count
-        move_list = self.game.find_moves(self.game.board, self.game.cars)
+        move_list = self.board.find_moves()
         print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
 
         # Check limit
@@ -36,17 +42,17 @@ class Algorithm(object):
 
         # Iterate over valid moves
         for move in move_list:
-            self.game.move_car(move)
-            new_board = self.game.board.board_string()
+            self.board.move_car(move)
+            new_board = self.board.board_string()
 
             # Check archive for map and length of route
             if new_board in self.archive and self.archive[new_board] <= move_count:
-                self.game.revert_move(move)
+                self.board.revert_move(move)
 
             # Check win condition
-            elif self.game.won():
+            elif self.board.won():
                 print(f"Algorithm succeeded, solution found with length: {move_count}")
-                self.end_board = self.game.board
+                self.end_board = self.board
                 self.winning_moves_list.append(move)
                 return True
 
@@ -57,22 +63,26 @@ class Algorithm(object):
 
             # Else reverse move
             else:
-                self.game.revert_move(move)
+                self.board.revert_move(move)
         return False
 
 if __name__ == "__main__":
 
-    # Initialize Algorithm
-    game = RushHour("../../data/Game2.txt")
-    solution = Algorithm(game)
+    rushhour = BnB("../../data/Game3.txt")
     count = 0
-    print(solution.game.board)
-    cProfile.run('solution.find_solution(count)')
+    cProfile.run('rushhour.find_solution(count)')
+
+    # Initialize Algorithm
+    # game = RushHour("../../data/Game2.txt")
+    # solution = Algorithm(game)
+    # count = 0
+    # print(solution.game.board)
+    # cProfile.run('solution.find_solution(count)')
 
     # Result
-    if solution.end_board:
-        solution.winning_moves_list.reverse()
-        print("Solution:", ", ".join(solution.winning_moves_list), ", X -> #" f"\nFinal board:\n{solution.end_board}")
+    if rushhour.end_board:
+        rushhour.winning_moves_list.reverse()
+        print("Solution:", ", ".join(rushhour.winning_moves_list), ", X -> #" f"\nFinal board:\n{rushhour.end_board}")
     else:
         print("No solution found")
-    print(f"Archive size: {len(solution.archive)}\n")
+    print(f"Archive size: {len(rushhour.archive)}\n")

@@ -10,7 +10,7 @@ import random
 import cProfile
 
 
-class Algorithm(object):
+class SR(object):
     """
     Main file for running and solving the game
     """
@@ -21,7 +21,7 @@ class Algorithm(object):
         """
 
         # load board
-        self.board = self.load_game(filename)
+        self.board = Board.load_game(self, filename)
 
         # create archive
         self.archive = [copy.copy(self.board.board_string())]
@@ -45,58 +45,58 @@ class Algorithm(object):
 
         self.move_history = []
 
-    def load_game(self, filename):
-        """
-        Method for loading the board
-        :param filename:
-        :return:
-        """
-        # establish dictionary of coordinates
-        coordinates = {}
+    # def load_game(self, filename):
+    #     """
+    #     Method for loading the board
+    #     :param filename:
+    #     :return:
+    #     """
+    #     # establish dictionary of coordinates
+    #     coordinates = {}
+    #
+    #     # establish dictionary of cars
+    #     cars = {}
+    #
+    #     # open file
+    #     with open(filename, "r") as f:
+    #         # read lines and coordinates, starting with x and y at 1
+    #         lines = f.readlines()
+    #         size = len(lines[0].strip())
+    #         x = 1
+    #         y = 1
+    #         # iterate over characters, creating the board and cars
+    #         for line in lines:
+    #             for char in line.strip():
+    #                 coordinates[x, y] = char
+    #                 if char.isalpha():
+    #                     if char in cars:
+    #                         cars[char].x.append(x)
+    #                         cars[char].y.append(y)
+    #                     else:
+    #                         cars[char] = Car(char, x, y, '')
+    #                 x += 1
+    #             x = 1
+    #             y += 1
+    #
+    #     # set car orientation
+    #     for car in cars:
+    #         if cars[car].x[0] - cars[car].x[1] == 0:
+    #             cars[car].orientation = 'VERTICAL'
+    #         else:
+    #             cars[car].orientation = 'HORIZONTAL'
+    #
+    #     # create board class
+    #     board = Board(size, coordinates, [])
+    #
+    #     # add cars to board
+    #     for car in cars:
+    #         board.add_car(cars[car])
+    #
+    #     # return board
+    #     return board
 
-        # establish dictionary of cars
-        cars = {}
-
-        # open file
-        with open(filename, "r") as f:
-            # read lines and coordinates, starting with x and y at 1
-            lines = f.readlines()
-            size = len(lines[0].strip())
-            x = 1
-            y = 1
-            # iterate over characters, creating the board and cars
-            for line in lines:
-                for char in line.strip():
-                    coordinates[x, y] = char
-                    if char.isalpha():
-                        if char in cars:
-                            cars[char].x.append(x)
-                            cars[char].y.append(y)
-                        else:
-                            cars[char] = Car(char, x, y, '')
-                    x += 1
-                x = 1
-                y += 1
-
-        # set car orientation
-        for car in cars:
-            if cars[car].x[0] - cars[car].x[1] == 0:
-                cars[car].orientation = 'VERTICAL'
-            else:
-                cars[car].orientation = 'HORIZONTAL'
-
-        # create board class
-        board = Board(size, coordinates, [])
-
-        # add cars to board
-        for car in cars:
-            board.add_car(cars[car])
-
-        # return board
-        return board
-
-    def solve(self, game, no_solution, upper_bound, best_game):
-        # print(f"\nBest game so far is: {best_game}!\n")
+    def solve(self, game, no_solution, upper_bound, best_game, filename):
+        print(f"\nBest game so far is: {best_game}!\n")
 
         # if it hasnt found a (better) solution 10 times in a row
         if no_solution == 100:
@@ -104,11 +104,11 @@ class Algorithm(object):
                 print(f"\nNo solution has been found!\n")
                 return []
             else:
-                # print(f"\nOptimal solution found is {best_game} in {len(best_game)} moves!\n")
+                print(f"\nOptimal solution found is {best_game} in {len(best_game)} moves!\n")
                 return best_game
 
 
-        game = Algorithm("../../data/Game2.txt")
+        game = SR(filename)
 
         self.board = game.board
 
@@ -123,15 +123,19 @@ class Algorithm(object):
         if not last_game:
             self.no_solution += 1
             print("Calling solve\n")
-            return self.solve(game, self.no_solution, self.upper_bound, best_game)
+            return self.solve(game, self.no_solution, self.upper_bound, best_game, filename)
         # if it has found a solution
         else:
             self.no_solution += 1
             self.upper_bound = len(last_game)
             best_game = last_game
-            return self.solve(game, self.no_solution, self.upper_bound, best_game)
+            return self.solve(game, self.no_solution, self.upper_bound, best_game, filename)
 
     def random_solve(self, game, archive, upper_bound):
+
+        print(f"\n\nBoard before move: \n\n{game.board}\n\n")
+        print(f"Upper bound is {upper_bound}.")
+        print(f"Number of moves already made: {len(self.move_history)}.")
 
         if len(self.move_history) == upper_bound:
             print(f"More than {len(self.move_history)} moves!")
@@ -214,8 +218,8 @@ class Algorithm(object):
 
     def __str__(self):
         return f"{self.board.coordinates}"
-
+7
 
 if __name__ == "__main__":
-    game = Algorithm("../../data/Game2.txt")
-    cProfile.run('best_game = game.solve(game, game.no_solution, game.upper_bound, game.best_game)')
+    game = SR("../../data/Game7.txt")
+    cProfile.run('game.solve(game, game.no_solution, game.upper_bound, game.best_game)')
