@@ -98,6 +98,8 @@ class SR(object):
     def solve(self, game, no_solution, upper_bound, best_game, filename):
         print(f"\nBest game so far is: {best_game}!\n")
 
+        print(f"\nNumber of tries: {no_solution}\n")
+
         # if it hasnt found a (better) solution 10 times in a row
         if no_solution == 100:
             if not best_game:
@@ -119,7 +121,7 @@ class SR(object):
         self.move_history = []
 
         print("\nCalling random_solve\n")
-        last_game = self.random_solve(game, self.archive, upper_bound)
+        last_game = self.random_solve(game, self.archive, upper_bound, no_solution)
         if not last_game:
             self.no_solution += 1
             print("Calling solve\n")
@@ -131,11 +133,13 @@ class SR(object):
             best_game = last_game
             return self.solve(game, self.no_solution, self.upper_bound, best_game, filename)
 
-    def random_solve(self, game, archive, upper_bound):
+    def random_solve(self, game, archive, upper_bound, no_solution):
 
-        print(f"\n\nBoard before move: \n\n{game.board}\n\n")
+        print(f"Board before move: \n\n{game.board}\n\n")
         print(f"Upper bound is {upper_bound}.")
         print(f"Number of moves already made: {len(self.move_history)}.")
+        print(f"Total number of tries: {no_solution}.")
+
 
         if len(self.move_history) == upper_bound:
             print(f"More than {len(self.move_history)} moves!")
@@ -169,7 +173,7 @@ class SR(object):
                     del self.move_history[-1]
                     # recursively call function again
                     print(f"\nNumber of allowed moves:{len(self.allowed_moves)}\n")
-                    return self.random_solve(game, archive, upper_bound)
+                    return self.random_solve(game, archive, upper_bound, no_solution)
                     # return False
 
             # check which allowed moves are winning moves and add these to winning_moves
@@ -214,7 +218,7 @@ class SR(object):
         del self.preferred_moves[:]
 
         # recursively call this function again
-        return self.random_solve(game, archive, upper_bound)
+        return self.random_solve(game, archive, upper_bound, no_solution)
 
     def __str__(self):
         return f"{self.board.coordinates}"
