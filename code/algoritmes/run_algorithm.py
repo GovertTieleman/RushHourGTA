@@ -14,41 +14,46 @@ from algoritmes.algo_smartrandom import SR
 class Run_algorithm(object):
 
     # welcome user
-    print(f"Welcome to GTA RushHour!\n"
+    print(f"\nWelcome to GTA RushHour!\n"
           "Please insert the level you would like to solve.\n")
 
-    level_input = input("level: ").split(' ')
+    level_input = input("Level: ").split(' ')
 
-    filename = "../../data/Game" + str(level_input[0]) + ".txt"
+    while int(level_input[0]) < 1 or int(level_input[0]) > 7:
+        print(f"\nRush Hour levels range from level 1 to level 7.")
+        level_input = input("Please try again: ").split(' ')
 
-    print(f"You have chosen level {level_input[0]}.\n"
-          f"Now please insert the algorithm you would like to use to solve this level.\n"
-          "You can choose between 'branch n bound', 'breadth first', 'depth first', 'random' and 'smart random'.\n")
+    else:
+        filename = "../../data/Game" + str(level_input[0]) + ".txt"
 
-    algorithm = input("algorithm: ")
+        print(f"\nYou have chosen level {level_input[0]}.\n\n"
+              f"Now please insert the algorithm you would like to use to solve this level.\n"
+              "You can choose between 'branch n bound', 'breadth first', 'depth first', 'random' and 'smart random'.\n")
 
-    if algorithm == "branch n bound":
-        rushhour = BnB(filename)
-        count = 0
-        # cProfile.run('rushhour.find_solution(count)')
-        rushhour.find_solution(count)
+        algorithm = input("algorithm: ")
 
-    elif algorithm == "breadth first":
-        rushhour = BF(filename)
-        rushhour.solve()
+        if algorithm == "branch n bound":
+            rushhour = BnB(filename)
+            count = 0
+            # cProfile.run('rushhour.find_solution(count)')
+            rushhour.find_solution(count)
 
-    elif algorithm == "depth first":
-        rushhour = DF(filename)
-        count = 0
-        rushhour.find_solution(count)
+        elif algorithm == "breadth first":
+            rushhour = BF(filename)
+            rushhour.solve()
 
-    elif algorithm == "random":
-        rushhour = R(filename)
-        rushhour.solve()
+        elif algorithm == "depth first":
+            rushhour = DF(filename)
+            count = 0
+            rushhour.find_solution(count)
 
-    elif algorithm == "smart random":
-        game = SR(filename)
-        game.solve(game, game.no_solution, game.upper_bound, game.best_game, filename)
+        elif algorithm == "random":
+            rushhour = R(filename)
+            rushhour.solve()
+
+        elif algorithm == "smart random":
+            game = SR(filename)
+            game.solve(game, game.no_solution, game.upper_bound, game.best_game, filename)
 
 
 
