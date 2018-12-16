@@ -45,55 +45,6 @@ class SR(object):
 
         self.move_history = []
 
-    # def load_game(self, filename):
-    #     """
-    #     Method for loading the board
-    #     :param filename:
-    #     :return:
-    #     """
-    #     # establish dictionary of coordinates
-    #     coordinates = {}
-    #
-    #     # establish dictionary of cars
-    #     cars = {}
-    #
-    #     # open file
-    #     with open(filename, "r") as f:
-    #         # read lines and coordinates, starting with x and y at 1
-    #         lines = f.readlines()
-    #         size = len(lines[0].strip())
-    #         x = 1
-    #         y = 1
-    #         # iterate over characters, creating the board and cars
-    #         for line in lines:
-    #             for char in line.strip():
-    #                 coordinates[x, y] = char
-    #                 if char.isalpha():
-    #                     if char in cars:
-    #                         cars[char].x.append(x)
-    #                         cars[char].y.append(y)
-    #                     else:
-    #                         cars[char] = Car(char, x, y, '')
-    #                 x += 1
-    #             x = 1
-    #             y += 1
-    #
-    #     # set car orientation
-    #     for car in cars:
-    #         if cars[car].x[0] - cars[car].x[1] == 0:
-    #             cars[car].orientation = 'VERTICAL'
-    #         else:
-    #             cars[car].orientation = 'HORIZONTAL'
-    #
-    #     # create board class
-    #     board = Board(size, coordinates, [])
-    #
-    #     # add cars to board
-    #     for car in cars:
-    #         board.add_car(cars[car])
-    #
-    #     # return board
-    #     return board
 
     def solve(self, game, no_solution, upper_bound, best_game, filename):
         print(f"\nBest game so far is: {best_game}!\n")
@@ -135,10 +86,10 @@ class SR(object):
 
     def random_solve(self, game, archive, upper_bound, no_solution):
 
-        print(f"Board before move: \n\n{game.board}\n\n")
+        print(f"Board: \n\n{game.board}\n\n")
         print(f"Upper bound is {upper_bound}.")
         print(f"Number of moves already made: {len(self.move_history)}.")
-        print(f"Total number of tries: {no_solution}.")
+        print(f"Total number of tries: {no_solution}.\n")
 
 
         if len(self.move_history) == upper_bound:
