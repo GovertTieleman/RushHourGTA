@@ -19,7 +19,7 @@ Er is data verzameld met behulp van 3 verschillende algoritmes die op dezelfde c
 ### branch and bound ###
    Het branch and bound algoritme vond oplossingen voor de borden 1 t/m 4 met behulp van de upper bound die werd gevonden met breadth      first search.
     
-   ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BranchnBound%20solutions/BnB%20table.png)
+   ![alt text](https://raw.githubusercontent.com/ertzor/RushHourGTA/master/resultaten/BranchnBound%20solutions/Bnb%20table.png)
 
 ## Hoe kan de kwaliteit van de verschillende oplossingen/algoritmes worden beoordeeld? ##
 De meest voor de hand liggende factor waarop een oplossing kan worden beoordeeld is het aantal zetten: hoe minder zetten er worden gedaan, hoe beter de oplossing. Hiervoor is het uiteraard wel nodig dat er op z'n minst een oplossing wordt gevonden. Daarnaast is het een pluspunt als het algoritme snel tot een oplossing komt. 
