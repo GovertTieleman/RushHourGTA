@@ -12,7 +12,7 @@ RECURSION_LIMIT = 10000
 
 class R(object):
     """
-    Main file for running and solving the game
+    Random class for running and solving the game
     """
 
     def __init__(self, filename):

@@ -10,7 +10,7 @@ sys.setrecursionlimit(25000)
 
 class SR(object):
     """
-    Main file for running and solving the game
+    Smart Random class for running and solving the game
     """
 
     def __init__(self, filename):

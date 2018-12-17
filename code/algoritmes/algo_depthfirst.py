@@ -6,7 +6,7 @@ sys.setrecursionlimit(5000)
 
 class DF(object):
     """
-    Main class for running and solving the game
+    Depth First class for running and solving the game
     """
 
     def __init__(self, filename):

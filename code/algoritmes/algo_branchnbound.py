@@ -5,11 +5,10 @@ sys.path.insert(0, '../')
 
 class BnB(object):
     """
-    Main class for running and solving the game
+    Branch n Bound class for running and solving the game
     """
 
     def __init__(self, filename):
-        # self.game = game
 
         # Load board
         self.board = Board.load_game(self, filename)
@@ -31,9 +30,6 @@ class BnB(object):
         current_board = board.board_string()
         self.archive[current_board] = move_count
 
-        # Update moves and count
-        move_list = board.find_moves()
-
         # Optional view of progress
         # print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
 
@@ -43,6 +39,7 @@ class BnB(object):
             return 1
 
         # Iterate over valid moves
+        move_list = board.find_moves()
         for move in move_list:
             board.move_car(move)
 

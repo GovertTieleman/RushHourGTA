@@ -8,7 +8,7 @@ sys.path.insert(0, '../')
 
 class BF(object):
     """
-    Main file for running and solving the game
+    Breadth First class for running and solving the game
     """
 
     def __init__(self, filename):
