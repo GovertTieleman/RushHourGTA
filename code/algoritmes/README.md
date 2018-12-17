@@ -14,6 +14,7 @@ Ons Depth First algoritme doorzoekt boomstructuur van een probleem door middel v
 Dit algoritme is een uitbreiding van Depth First. Er is een bound aan het algoritme toegevoegd die ervoor zorgt dat er niet verder wordt gezocht dan de kortste route die bekend is voor het bord. 
 
 _belangrijk_
+
 Om de met Branch n Bound behaalde resultaten te repliceren, moet de juiste bound worden ingevoerd in het python bestand. De juiste bound voor ieder level is de bound die met breadth first is gevonden, zoals te zien in de map met resultaten.
 
 ## Breadth First
