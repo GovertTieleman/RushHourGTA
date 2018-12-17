@@ -2,9 +2,7 @@
 import sys
 import copy
 import random
-import cProfile
 from classes.board import Board
-from classes.car import Car
 
 sys.path.insert(0, '../')
 sys.setrecursionlimit(25000)

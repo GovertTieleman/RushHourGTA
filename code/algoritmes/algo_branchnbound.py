@@ -1,9 +1,7 @@
 # Branch n Bound
-import cProfile
 import sys
-sys.path.insert(0, '../')
 from classes.board import Board
-from classes.car import Car
+sys.path.insert(0, '../')
 
 class BnB(object):
     """

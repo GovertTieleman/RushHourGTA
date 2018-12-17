@@ -1,8 +1,6 @@
 # Depth First
 import sys
-import cProfile
 from classes.board import Board
-from classes.car import Car
 sys.path.insert(0, '../')
 sys.setrecursionlimit(5000)
 
@@ -35,7 +33,7 @@ class DF(object):
         # Check limit
         move_count += 1
         if move_count == 5000:
-            return False
+            return 1
 
         # Iterate over valid moves
         for move in move_list:
@@ -55,4 +53,4 @@ class DF(object):
 
             # Revert move
             board.revert_move(move)
-        return False
+        return 0

@@ -3,8 +3,6 @@ import cProfile
 import sys
 sys.path.insert(0, '../')
 
-from classes.board import Board
-
 from algoritmes.algo_branchnbound import BnB
 from algoritmes.algo_breadthfirst import BF
 from algoritmes.algo_depthfirst import DF
@@ -35,7 +33,6 @@ class Run_algorithm(object):
         if algorithm == "branch n bound":
             rushhour = BnB(filename)
             count = 0
-            # cProfile.run('rushhour.find_solution(count)')
             rushhour.solve()
 
         elif algorithm == "breadth first":

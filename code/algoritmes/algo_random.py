@@ -1,11 +1,8 @@
 # Random
-import cProfile
 import sys
 import random
 import copy
-import cProfile
 from classes.board import Board
-from classes.car import Car
 
 sys.path.insert(0, '../')
 
@@ -57,10 +54,3 @@ class R(object):
 
         print(f"The best solution was: {self.best_solution}\n"
               f"Number of moves: {len(self.best_solution)}")
-
-
-if __name__ == "__main__":
-    rushhour = R("../../data/Game7.txt")
-    cProfile.run('rushhour.solve()')
-
-

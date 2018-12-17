@@ -1,10 +1,7 @@
 # Breadth First
-import cProfile
 import sys
 import copy
-import cProfile
 from classes.board import Board
-from classes.car import Car
 
 sys.path.insert(0, '../')
 
@@ -75,10 +72,5 @@ class BF(object):
 
                     # revert move
                     board.revert_move(move)
-
-
-if __name__ == "__main__":
-    rushhour = BF("../../data/Game3.txt")
-    cProfile.run('rushhour.solve()')
 
 
