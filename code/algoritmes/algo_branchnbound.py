@@ -18,7 +18,6 @@ class BnB(object):
         self.upper_bound = 100
 
     def solve(self):
-        print("\nRunning Branch 'n Bound...\n")
         self.find_solution(0)
         print(f"Algorithm finished. \nArchive size: {len(self.archive)}")
 
