@@ -1,13 +1,13 @@
+# Smart Random
 import sys
-sys.path.insert(0, '../')
-sys.setrecursionlimit(25000)
-
-from classes.board import Board
-from classes.car import Car
-
 import copy
 import random
 import cProfile
+from classes.board import Board
+from classes.car import Car
+
+sys.path.insert(0, '../')
+sys.setrecursionlimit(25000)
 
 
 class SR(object):
@@ -20,29 +20,23 @@ class SR(object):
         Load the board and cars
         """
 
-        # load board
+        # Load board
         self.board = Board.load_game(self, filename)
 
-        # create archive
+        # Create archive
         self.archive = [copy.copy(self.board.board_string())]
 
-        # create list for allowed moves
-        self.allowed_moves = []
-
-        # create list for winning moves
-        self.winning_moves = []
-
-        # create list for preferred moves
-        self.preferred_moves = []
-
-        # to keep track of number of times no solution has been found
+        # Number of times no solution has been found
         self.no_solution = 0
 
-        # variable for upper bound
+        # Attributes
+        self.allowed_moves = []
+        self.winning_moves = []
+        self.preferred_moves = []
+
+        # Variable for upper bound
         self.upper_bound = 500
-
         self.best_game = []
-
         self.move_history = []
 
 
@@ -173,8 +167,3 @@ class SR(object):
 
     def __str__(self):
         return f"{self.board.coordinates}"
-7
-
-if __name__ == "__main__":
-    game = SR("../../data/Game7.txt")
-    cProfile.run('game.solve(game, game.no_solution, game.upper_bound, game.best_game)')

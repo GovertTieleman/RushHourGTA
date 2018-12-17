@@ -1,8 +1,7 @@
+# Branch n Bound
 import cProfile
 import sys
 sys.path.insert(0, '../')
-
-# from classes.rush_hour_depth_first import RushHour
 from classes.board import Board
 from classes.car import Car
 
@@ -14,20 +13,17 @@ class BnB(object):
     def __init__(self, filename):
         # self.game = game
 
-        # load board
+        # Load board
         self.board = Board.load_game(self, filename)
-        self.filename = filename
 
+        # Attributes
         self.archive = {}
-        self.winning_moves_list = []
-        self.end_board = ""
         self.upper_bound = 100
 
     def solve(self):
-        while self.find_solution(0):
-            self.board = Board.load_game(self, self.filename)
-            self.winning_moves_list.clear()
-        print(f"Algorithm finished. \narchive: {len(self.archive)}")
+        print("Searching for solution")
+        self.find_solution(0)
+        print(f"Algorithm finished. \nArchive size: {len(self.archive)}")
 
     # Recursive function:
     def find_solution(self, move_count):
@@ -39,12 +35,14 @@ class BnB(object):
 
         # Update moves and count
         move_list = board.find_moves()
-        #print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
+
+        # Optional view of progress
+        # print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
 
         # Check bound
         move_count += 1
         if move_count == self.upper_bound:
-            return False
+            return 1
 
         # Iterate over valid moves
         for move in move_list:
@@ -52,42 +50,17 @@ class BnB(object):
 
             # Check archive for map and length of route
             new_board = board.board_string()
-            if new_board in self.archive and self.archive[new_board] <= move_count > 7:
-                board.revert_move(move)
+            if new_board not in self.archive or self.archive[new_board] > move_count:
 
-            # Check win condition
-            elif board.won():
-                print(f"Algorithm succeeded, solution found with length: {move_count}")
+                # Check win condition
+                if board.won():
+                    print(f"Solution length: {move_count}\n")
+                    self.upper_bound = move_count
 
-                # Update attributes
-                self.upper_bound = move_count
-                self.archive[current_board] = move_count
-                self.end_board = board
-                self.winning_moves_list.append(move)
-                return True
+                # Make next move
+                else:
+                    self.find_solution(move_count)
 
-            # Make next move
-            elif self.find_solution(move_count):
-
-                # If solution found, add move to the winning move sequence
-                self.winning_moves_list.append(move)
-                return True
-
-            # Else reverse move
-            else:
-                board.revert_move(move)
-        return False
-
-if __name__ == "__main__":
-
-    rush_hour = BnB("../../data/Game3.txt")
-    count = 0
-    cProfile.run('rush_hour.solve()')
-
-    # Result
-    if rush_hour.end_board:
-        rush_hour.winning_moves_list.reverse()
-        print("Solution:", ", ".join(rush_hour.winning_moves_list), ", X -> #" f"\nFinal board:\n{rush_hour.end_board}")
-    else:
-        print("No solution found")
-    print(f"Archive size: {len(rush_hour.archive)}\n")
+            # Revert move
+            board.revert_move(move)
+        return 0
