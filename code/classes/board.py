@@ -1,5 +1,6 @@
 from classes.car import Car
 
+
 class Board(object):
     """
     Representation of the board in Rush Hour.

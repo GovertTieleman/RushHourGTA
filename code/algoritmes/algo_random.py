@@ -7,7 +7,7 @@ from classes.board import Board
 sys.path.insert(0, '../')
 
 
-RECURSION_LIMIT = 10000
+RECURSION_LIMIT = 100
 
 
 class R(object):
@@ -37,7 +37,7 @@ class R(object):
         while self.recursion_depth < self.recursion_limit:
             # increment recursion depth
             self.recursion_depth += 1
-            print(self.recursion_depth)
+            print(f"solutions found so far: {self.recursion_depth}")
 
             # make random moves until game is won
             while not self.board.won():
@@ -53,4 +53,5 @@ class R(object):
             self.board = Board.load_game(self, self.filename)
 
         print(f"The best solution was: {self.best_solution}\n"
-              f"Number of moves: {len(self.best_solution)}")
+              f"Number of moves: {len(self.best_solution)}\n"
+              f"The average number of moves to reach a solution was: ")

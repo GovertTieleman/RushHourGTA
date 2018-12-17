@@ -46,16 +46,18 @@ class BF(object):
                   f"size of queue: {len(queue)}\n"
                   f"size of archive: {len(visited)}\n")
 
+            # stop at max depth
             if depth >= max_depth:
                 print(f"max_depth exceeded\n")
                 break
 
+            # if visited, skip, otherwise add to archive
             if board.board_string() in visited:
-                print(f"board visited\n")
                 continue
             else:
                 visited.add(board.board_string())
 
+            # break if won
             if board.won():
                 break
             else:
@@ -72,5 +74,3 @@ class BF(object):
 
                     # revert move
                     board.revert_move(move)
-
-

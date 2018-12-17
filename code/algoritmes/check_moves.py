@@ -4,8 +4,6 @@ sys.path.insert(0, '../')
 
 from classes.board import Board
 from classes.car import Car
-import copy
-import random
 
 
 class RushHour(object):
@@ -71,14 +69,9 @@ class RushHour(object):
         # return board
         return board
 
-    def solve(self):
+    def solve(self, moves_list):
         # show board
         print(f"{self.board}\n")
-
-        # moves_list = ['Y -1', 'Q 2', 'Y 1', 'N -1', 'T -2', 'o -1', 'Q -2', 'E -1', 'O 1', 'e 1', 'T -1', 'l -1', 'T 1', 'I 1', 'N -1', 'S -2']
-        moves_list = ['A -2', 'A 1', 'X -1', 'B -1', 'E -1', 'A -1', 'X -1', 'X 2', 'A 1', 'E 1', 'X -2', 'A -1', 'B 1', 'C -1', 'X 1', 'A 1', 'X -1', 'C 1', 'A 1', 'C -1', 'D -1',
- 'A -2', 'X 1', 'B -2', 'F -2', 'H 1', 'X -1', 'X 2', 'G 1', 'E -1', 'G -1', 'H -1', 'X -2', 'X 1', 'F 2', 'X 1', 'F -1', 'X -1', 'X -1', 'F 1', 'D 1', 'X 1', 'C 1', 'E 1', 'B 2', 'B -1 ', 'X 1', 'B -1', 'X -2', 'C -1', 'D -1', 'F -2', 'X 3', 'H 1', 'E -1', 'G 1', 'I -1', 'H 1', 'I -1', 'X -2', 'G 1', 'I 2', 'F 1', 'G -1', 'F -1', 'G -1', 'F 1', 'J -1', 'F -1', 'X -1',
- 'L -3', 'L 1', 'X 1', 'L 1', 'X -1', 'J -1', 'K -2', 'L -1', 'K -1', 'J 1', 'X 3', 'L -1', 'X -2', 'F 1', 'X -1', 'F -1', 'J 1', 'X 3', 'H -1', 'E 3']
 
         # solve game
         for move in moves_list:
@@ -89,6 +82,6 @@ class RushHour(object):
 
 if __name__ == "__main__":
     rushhour = RushHour("../../data/Game7.txt")
-    rushhour.solve()
+    cProfile.run('rushhour.solve()')
 
 

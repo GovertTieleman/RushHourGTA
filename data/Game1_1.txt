@@ -1,6 +1,0 @@
---ABBC
---A--C
---AXXC#
----DEE
-FG-D--
-FG-DHH

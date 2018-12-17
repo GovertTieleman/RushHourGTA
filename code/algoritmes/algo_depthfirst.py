@@ -4,6 +4,7 @@ from classes.board import Board
 sys.path.insert(0, '../')
 sys.setrecursionlimit(5000)
 
+
 class DF(object):
     """
     Depth First class for running and solving the game
@@ -11,8 +12,6 @@ class DF(object):
 
     def __init__(self, filename):
         print("\nRunning Depth First...\n")
-
-        # self.game = game
 
         # load board
         self.board = Board.load_game(self, filename)

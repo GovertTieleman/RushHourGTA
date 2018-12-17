@@ -1,7 +1,7 @@
-# Branch n Bound
 import sys
 from classes.board import Board
 sys.path.insert(0, '../')
+
 
 class BnB(object):
     """
@@ -15,7 +15,7 @@ class BnB(object):
 
         # Attributes
         self.archive = {}
-        self.upper_bound = 100
+        self.upper_bound = 26
 
     def solve(self):
         self.find_solution(0)
@@ -29,8 +29,8 @@ class BnB(object):
         current_board = board.board_string()
         self.archive[current_board] = move_count
 
-        # Optional view of progress
-        # print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
+        # view of progress
+        print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
 
         # Check bound
         move_count += 1
@@ -57,4 +57,5 @@ class BnB(object):
 
             # Revert move
             board.revert_move(move)
+
         return 0

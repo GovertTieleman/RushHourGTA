@@ -37,7 +37,6 @@ class SR(object):
         self.best_game = []
         self.move_history = []
 
-
     def solve(self, game, no_solution, upper_bound, best_game, filename):
         print(f"\nBest game so far is: {best_game}!\n")
 
@@ -51,7 +50,6 @@ class SR(object):
             else:
                 print(f"\nOptimal solution found is {best_game} in {len(best_game)} moves!\n")
                 return best_game
-
 
         game = SR(filename)
 
@@ -69,6 +67,7 @@ class SR(object):
             self.no_solution += 1
             print("Calling solve\n")
             return self.solve(game, self.no_solution, self.upper_bound, best_game, filename)
+
         # if it has found a solution
         else:
             self.no_solution += 1
@@ -82,7 +81,6 @@ class SR(object):
         print(f"Upper bound is {upper_bound}.")
         print(f"Number of moves already made: {len(self.move_history)}.")
         print(f"Total number of tries: {no_solution}.\n")
-
 
         if len(self.move_history) == upper_bound:
             print(f"More than {len(self.move_history)} moves!")

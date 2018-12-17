@@ -15,3 +15,6 @@ Dit algoritme is een uitbreiding van Depth First. Er is een bound aan het algori
 
 ## Breadth First
 Breadth first search werkt ook door de state te verkennen vanuit een boomstructuur. In plaats van een hele vertakking tot het einde af te gaan, zoals bij depth first gebeurt, wordt elke depth eerst volledig verkend. Dit houdt in dat elke mogelijke zet op een bord wordt gedaan, en de kinderborden worden opgeslagen. Pas als alle zetten van alle borden op een bepaalde diepte zijn geprobeerd gaat het algoritme verder naar de volgende diepte. Door een archief bij te houden wordt het herhalen van reeds gepasseerde borden vermeden.
+
+## check moves
+Met deze file kan een moves list worden gecontroleerd door na elke move het bord te printen. Kopiëer een lijst van moves en voer deze in als argument bij solve, onderaan de code. 
