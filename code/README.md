@@ -1,4 +1,4 @@
-#Code
+# Code
 
 Er zijn hier 2 mappen, een met python classes en een met algoritmes. Het doel van de classes is om een speelbare versie van het spel Rush Hour te vormen. Dit spel kan dan vervolgens door onze algoritmes worden gespeeld, met het doel om in zo min mogelijk zetten te winnen.
 
