@@ -10,6 +10,8 @@ class DF(object):
     """
 
     def __init__(self, filename):
+        print("\nRunning Depth First...\n")
+
         # self.game = game
 
         # load board

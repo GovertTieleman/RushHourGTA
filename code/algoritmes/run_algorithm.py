@@ -21,36 +21,50 @@ class Run_algorithm(object):
         print(f"\nRush Hour levels range from level 1 to level 7.")
         level_input = input("Please try again: ").split(' ')
 
-    else:
-        filename = "../../data/Game" + str(level_input[0]) + ".txt"
 
-        print(f"\nYou have chosen level {level_input[0]}.\n\n"
-              f"Now please insert the algorithm you would like to use to solve this level.\n"
-              "You can choose between 'branch n bound', 'breadth first', 'depth first', 'random' and 'smart random'.\n")
+    filename = "data/Game" + str(level_input[0]) + ".txt"
 
-        algorithm = input("algorithm: ")
+    print(f"\nYou have chosen level {level_input[0]}.\n\n"
+          f"Now please insert the algorithm you would like to use to solve this level.\n"
+          f"You can choose between:\n1. branch n bound\n2. breadth first\n3. depth first\n4. random\n5. smart random\n\n")
 
-        if algorithm == "branch n bound":
-            rushhour = BnB(filename)
-            count = 0
-            rushhour.solve()
+    while True:
+        algorithm = input("\ninsert algorithm number: ")
+        if algorithm == "":
+            print("\nïnvalid input")
+            continue
+        elif not algorithm.isdigit():
+            print("\nïnvalid input")
+            continue
+        else:
+            algorithm = int(algorithm)
 
-        elif algorithm == "breadth first":
-            rushhour = BF(filename)
-            rushhour.solve()
+        if algorithm in range(1, 6):
+            break
+        else:
+            print("\ninvalid input")
 
-        elif algorithm == "depth first":
-            rushhour = DF(filename)
-            count = 0
-            rushhour.find_solution(count)
+    if algorithm == 1:
+        rushhour = BnB(filename)
+        count = 0
+        cProfile.runctx("rushhour.solve()",globals(),locals())
 
-        elif algorithm == "random":
-            rushhour = R(filename)
-            rushhour.solve()
+    elif algorithm == 2:
+        rushhour = BF(filename)
+        cProfile.runctx("rushhour.solve()", globals(), locals())
 
-        elif algorithm == "smart random":
-            game = SR(filename)
-            game.solve(game, game.no_solution, game.upper_bound, game.best_game, filename)
+    elif algorithm == 3:
+        rushhour = DF(filename)
+        count = 0
+        cProfile.runctx("rushhour.find_solution(count)", globals(), locals())
+
+    elif algorithm == 4:
+        rushhour = R(filename)
+        cProfile.runctx("rushhour.solve()", globals(), locals())
+
+    elif algorithm == 5:
+        game = SR(filename)
+        cProfile.runctx("game.solve(game, game.no_solution, game.upper_bound, game.best_game, filename)", globals(), locals())
 
 
 
