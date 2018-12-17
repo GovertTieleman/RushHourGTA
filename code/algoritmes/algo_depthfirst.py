@@ -27,11 +27,12 @@ class DF(object):
     def find_solution(self, move_count):
 
         # Check and update archive
-        current_board = self.board.board_string()
+        board = self.board
+        current_board = board.board_string()
         self.archive[current_board] = move_count
 
         # Update moves and count
-        move_list = self.board.find_moves()
+        move_list = board.find_moves()
         print(f"\nmove list: {move_list}\n")
 
         print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
@@ -43,19 +44,19 @@ class DF(object):
 
         # Iterate over valid moves
         for move in move_list:
-            self.board.move_car(move)
-            new_board = self.board.board_string()
+            board.move_car(move)
+            new_board = board.board_string()
 
             # Check win condition
-            if self.board.won():
+            if board.won():
                 print(f"Algorithm succeeded, solution found with length: {move_count + 1}")
-                self.end_board = self.board
+                self.end_board = board
                 self.winning_moves_list.append(move)
                 return True
 
             # Check archive for map and length of route
             if new_board in self.archive and self.archive[new_board] <= move_count:
-                self.board.revert_move(move)
+                board.revert_move(move)
 
             # Make next move
             elif self.find_solution(move_count):
@@ -64,7 +65,7 @@ class DF(object):
 
             # Else reverse move
             else:
-                self.board.revert_move(move)
+                board.revert_move(move)
         return False
 
 
@@ -72,9 +73,9 @@ if __name__ == "__main__":
 
 
     #
-    rushhour = DF("../../data/Game3.txt")
+    rush_hour = DF("../../data/Game3.txt")
     count = 0
-    cProfile.run('rushhour.find_solution(count)')
+    cProfile.run('rush_hour.find_solution(count)')
 
 
     #

@@ -36,7 +36,7 @@ class Run_algorithm(object):
             rushhour = BnB(filename)
             count = 0
             # cProfile.run('rushhour.find_solution(count)')
-            rushhour.find_solution(count)
+            rushhour.solve()
 
         elif algorithm == "breadth first":
             rushhour = BF(filename)
