@@ -15,7 +15,7 @@ class BnB(object):
 
         # Attributes
         self.archive = {}
-        self.upper_bound = 26
+        self.upper_bound = 100
 
     def solve(self):
         self.find_solution(0)
@@ -29,8 +29,8 @@ class BnB(object):
         current_board = board.board_string()
         self.archive[current_board] = move_count
 
-        # view of progress
-        print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
+        # Optional view of progress
+        # print(f"{current_board}:\nmove count:{move_count}\narchive size:{len(self.archive)}\n")
 
         # Check bound
         move_count += 1

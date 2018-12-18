@@ -34,7 +34,7 @@ class Run_algorithm(object):
             print("\ninvalid input")
 
     # make filename string
-    filename = "data/Game" + str(level_input) + ".txt"
+    filename = "../../data/Game" + str(level_input) + ".txt"
 
     print(f"\nYou have chosen level {level_input}.\n"
           f"Now please insert the algorithm you would like to use to solve this level.\n"

@@ -47,10 +47,11 @@ class DF(object):
                 # Check win condition
                 if board.won():
                     print(f"Solution length: {move_count}")
+                    return True
 
                 # Make next move
-                else:
-                    self.find_solution(move_count)
+                elif self.find_solution(move_count):
+                    return True
 
             # Revert move
             board.revert_move(move)
